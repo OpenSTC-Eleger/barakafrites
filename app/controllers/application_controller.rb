@@ -24,8 +24,8 @@ class ApplicationController < ActionController::Base
 
   def check_authenticated?
     authenticate_or_request_with_http_token do |token,options|
-      if @api_credential = ApiCredential.last(access_token: token)
-        @user_context = set_user_context(@api_credential)
+      if @api_credential = ApiCredential.find_last_by_access_token(token)
+        set_user_context(@api_credential)
       else
         false
       end
