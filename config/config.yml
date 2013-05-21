@@ -1,0 +1,7 @@
+development:
+  openerp:
+    host: 'octm-dev.siclic.fr'
+    port: '8069'
+    common: '/xmlrpc/common'
+    object: '/xmlrpc/object'
+  root_menu: 'OpenSTM'
