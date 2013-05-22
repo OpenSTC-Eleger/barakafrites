@@ -16,7 +16,7 @@ class Openerp
     object_client(user_context).execute(model,'read',ids,fields)
   end
 
-  def self.search(user_context,model,args)
+  def self.search(user_context,model,args = [])
     object_client(user_context).execute(model,'search',args)
   end
 

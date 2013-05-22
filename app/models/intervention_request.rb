@@ -2,8 +2,7 @@ require 'openerp'
 
 class InterventionRequest
 
-  def self.where(user_context,filters=[])
-    Rails.logger.info("request context : #{user_context}")
+  def self.where(user_context,filters = [])
     Openerp.search(user_context,'openstc.ask',filters)
   end
 
