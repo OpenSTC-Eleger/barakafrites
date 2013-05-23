@@ -21,15 +21,13 @@ class Openerp
   end
 
   def self.write(user_context,model,ids,args)
-   # begin
+    begin
       res = object_client(user_context).execute(model,'write',ids,args)
-    #    {success: res, errors: nil}
-    #rescue RuntimeError => e
-    #  Rails.logger.error(e.message.inspect)
-    #  {success: false, errors: e.message}
-    #end
-
-
+      {success: res, errors: nil}
+    rescue RuntimeError => e
+      Rails.logger.error(e.message.inspect)
+      {success: false, errors: e.message}
+    end
   end
 
   def self.object_client(user_context)
