@@ -12,7 +12,7 @@ class Openerp
     @common_client.login(dbname,user,password)
   end
 
-  def self.read(user_context,model,ids,fields)
+  def self.read(user_context,model,ids,fields = [])
     object_client(user_context).execute(model,'read',ids,fields)
   end
 

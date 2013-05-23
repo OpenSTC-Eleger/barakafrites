@@ -3,7 +3,8 @@ class InterventionRequestsController < ApplicationController
 
 
   def index
-    @intervention_requests = InterventionRequest.where(user_context)
+    @intervention_requests_ids = InterventionRequest.where(user_context)
+    @intervention_requests = InterventionRequest.find(user_context,@intervention_requests_ids)
     respond_to do |format|
       format.json {render :json => @intervention_requests}
     end
