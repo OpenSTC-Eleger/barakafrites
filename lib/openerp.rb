@@ -20,6 +20,18 @@ class Openerp
     object_client(user_context).execute(model,'search',args)
   end
 
+  def self.write(user_context,model,ids,args)
+   # begin
+      res = object_client(user_context).execute(model,'write',ids,args)
+    #    {success: res, errors: nil}
+    #rescue RuntimeError => e
+    #  Rails.logger.error(e.message.inspect)
+    #  {success: false, errors: e.message}
+    #end
+
+
+  end
+
   def self.object_client(user_context)
     XMLRPC::Client.new(@host,@object,@port).proxy(nil,user_context[:dbname],user_context[:uid],user_context[:pwd])
   end

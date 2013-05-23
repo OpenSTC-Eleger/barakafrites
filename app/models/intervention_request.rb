@@ -25,4 +25,8 @@ class InterventionRequest
     end
   end
 
+  def self.write(user_context, ids = [], args = {})
+    @write_result = Openerp.write(user_context, @@model_name, ids, args)
+  end
+
 end

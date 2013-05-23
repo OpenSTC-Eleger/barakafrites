@@ -17,4 +17,17 @@ class InterventionRequestsController < ApplicationController
     end
   end
 
+  def update
+    @update = InterventionRequest.write(user_context, [params[:id]],params[:intervention_request])
+    if @update[:success]
+      respond_to do |format|
+        format.json {render :json => @update}
+      end
+    else
+      respond_to do |format|
+        format.json { render :json => @update, :status =>  400}
+      end
+    end
+  end
+
 end
