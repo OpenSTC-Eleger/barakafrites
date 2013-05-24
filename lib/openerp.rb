@@ -32,7 +32,7 @@ class Openerp
 
   def self.create(user_context,model,args)
     begin
-     id = object_client(user_context).execute(mode,'create', args)
+     id = object_client(user_context).execute(model,'create', args)
      {success:true,errors:nil,id:id}
     rescue RuntimeError => e
       Rails.logger.error(e.message)
