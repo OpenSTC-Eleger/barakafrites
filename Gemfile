@@ -17,12 +17,18 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'rabl'
-gem 'session_off'
-gem 'jquery-rails'
-gem 'hashie'
-gem 'sqlite3'
 
+# To format nice JSON and XML output
+gem 'rabl'
+
+# To disable rails sessions
+gem 'session_off'
+
+# Wonderfull hashes
+gem 'hashie'
+
+gem 'sqlite3'
+gem 'jquery-rails'
 
 # Test libraries
 group :development, :test do
