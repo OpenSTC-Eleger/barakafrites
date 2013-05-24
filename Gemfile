@@ -23,6 +23,14 @@ gem 'jquery-rails'
 gem 'hashie'
 gem 'sqlite3'
 
+
+# Test libraries
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_girl'
+end
+
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

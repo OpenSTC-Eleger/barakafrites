@@ -5,3 +5,11 @@ development:
     common: '/xmlrpc/common'
     object: '/xmlrpc/object'
   root_menu: 'OpenSTM'
+
+test:
+  openerp:
+    host: 'octm-dev.siclic.fr'
+    port: '8069'
+    common: '/xmlrpc/common'
+    object: '/xmlrpc/object'
+  root_menu: 'OpenSTM'
