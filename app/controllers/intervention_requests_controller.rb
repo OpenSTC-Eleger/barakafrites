@@ -1,3 +1,8 @@
+##
+# Intervention Requests API controller
+# TODO : Refactor to use respond with
+#
+
 class InterventionRequestsController < ApplicationController
   before_filter :check_authenticated?
 
@@ -30,9 +35,16 @@ class InterventionRequestsController < ApplicationController
     end
   end
 
+  ##
+  # TODO : Refactor to avoid code duplication
+  #
   def create
-    id = InterventionRequest.create(user_context, params[:intervention_request])
-
+    @create=  InterventionRequest.create(user_context, params[:intervention_request])
+    if @create[:success]
+      respond_to { |format| format.json { render :json => @create } }
+    else
+      respond_to {|format| format.json {render :json => @create, :status => 400}}
+    end
   end
 
 end
