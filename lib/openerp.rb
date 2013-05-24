@@ -37,7 +37,9 @@ class Openerp
     rescue RuntimeError => e
       Rails.logger.error(e.message)
       {success:false,errors:e.message}
+    end
   end
+
 
 
   # Openerp.object_client is the XMLRPC connection proxy
