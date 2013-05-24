@@ -30,4 +30,9 @@ class InterventionRequestsController < ApplicationController
     end
   end
 
+  def create
+    id = InterventionRequest.create(user_context, params[:intervention_request])
+
+  end
+
 end

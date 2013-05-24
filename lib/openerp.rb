@@ -30,6 +30,18 @@ class Openerp
     end
   end
 
+  def self.create(user_context,model,args)
+    begin
+     id = object_client(user_context).execute(mode,'create', args)
+     {success:true,errors:nil,id:id}
+    rescue RuntimeError => e
+      Rails.logger.error(e.message)
+      {success:false,errors:e.message}
+  end
+
+
+  # Openerp.object_client is the XMLRPC connection proxy
+  # It handles server connection to the object namespace
   def self.object_client(user_context)
     XMLRPC::Client.new(@host,@object,@port).proxy(nil,user_context[:dbname],user_context[:uid],user_context[:pwd])
   end
