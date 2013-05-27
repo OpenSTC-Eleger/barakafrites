@@ -10,7 +10,7 @@ class InterventionRequest
 
   def initialize(params = {})
     super(params)
-    @href = "/#{self.class.to_s.underscore}/#{self.id}"
+    @href = "/#{self.class.to_s.underscore.pluralize}/#{self.id}"
   end
 
 
