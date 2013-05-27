@@ -10,9 +10,11 @@ class Menu
 
   def self.recursive_fetch(user_context,id)
     item = Openerp.read(user_context, 'ir.ui.menu', id,['child_id','name','complete_name','parent_id' ])
-    item['path'] = item['complete_name'].split('/').map(&:parameterize).join('/')
+    item['path'] = build_path_from_string(item)
     item['submenu'] = Array.new
-    case item['child_id'].count
+    case item['child_id'].try :count
+      when nil
+        item
       when 0
         item
       else
@@ -22,5 +24,19 @@ class Menu
         item
     end
   end
+
+
+
+
+  def self.build_path_from_string(menu_item)
+    case menu_item['complete_name']
+      when nil
+        ''
+      else
+        menu_item['complete_name'].split('/').map(&:parameterize).join('/')
+    end
+  end
+
+
 
 end
