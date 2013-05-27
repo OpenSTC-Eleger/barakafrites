@@ -2,7 +2,7 @@ require 'openerp'
 
 class Menu
 
-  def self.fetch(user_context,root_name = Config.get[:root_menu])
+  def self.fetch(user_context,root_name = BarakafritesConfig.get[:root_menu])
     root_id = Openerp.search(user_context,'ir.ui.menu',[['name', '=',root_name]]).first
     recursive_fetch(user_context,root_id)
   end

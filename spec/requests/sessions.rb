@@ -36,13 +36,22 @@ describe "Sessions" do
     end
 
     context "Fail" do
-
+      before(:each) { Openerp.stub(:login).and_return(false) }
       it "responds with 'application/json' content type" do
         post "/sessions", :login => 'test', :password => 'test', :dbname => 'test'
         expect(response.header['content-type']).to include('application/json')
       end
 
-      it "does not respond with token"
+      it "does not respond with token" do
+        post "/sessions", :login => 'test', :password => 'test', :dbname => 'test'
+        response.body.should_not include("token")
+      end
+
+
+      it "respond with Authentication Failed error" do
+        post "/sessions", :login => 'test', :password => 'test', :dbname => 'test'
+        JSON.load(response.body)["errors"].should include("Authentication Failed")
+      end
 
     end
 

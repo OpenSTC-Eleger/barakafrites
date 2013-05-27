@@ -1,4 +1,4 @@
-module Config
+module BarakafritesConfig
   @vars = YAML.load_file(Rails.root + 'config/config.yml')
 
   def self.get

@@ -1,11 +1,11 @@
 require 'xmlrpc/client'
 class Openerp
 
-  @host = Config.get[:openerp][:host]
-  @port = Config.get[:openerp][:port]
-  @common = Config.get[:openerp][:common]
-  @object = Config.get[:openerp][:object]
-  @base = Config.get[:openerp][:base]
+  @host = BarakafritesConfig.get[:openerp][:host]
+  @port = BarakafritesConfig.get[:openerp][:port]
+  @common = BarakafritesConfig.get[:openerp][:common]
+  @object = BarakafritesConfig.get[:openerp][:object]
+  @base = BarakafritesConfig.get[:openerp][:base]
   @common_client = XMLRPC::Client.new(@host,@common,@port).proxy(nil)
 
   def self.login(dbname,user,password)
