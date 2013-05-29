@@ -23,7 +23,7 @@ describe "/intervention_requests" do
   describe "GET" do
 
     def request
-      get '/intervention_requests', nil,{'HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""}
+      get '/intervention_requests', nil, {'HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""}
     end
 
     ##
@@ -49,4 +49,110 @@ describe "/intervention_requests" do
       JSON.load(response.body).first["href"].should match(/\/intervention_requests\//)
     end
   end
+
+  describe "POST" do
+    def request(data = nil)
+      post '/intervention_requests', data, {'HTTP_ACCEPT' => 'application/json','HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""}
+    end
+
+    def valid_data
+      @valid_data = <<DATA
+
+        {
+            "intervention_request":
+            {
+                "partner_type":4,
+            "email_text":"en attente",
+            "partner_id":7,
+            "partner_address":6,
+            "people_name":"",
+            "people_phone":"",
+            "people_email":"",
+            "name":"Create test API",
+            "description":"Create test desc",
+            "service_id":1,
+            "site1":"204",
+            "site_details":"rien"
+        }
+        }
+DATA
+    end
+
+    it "require authentication" do
+      post '/intervention_requests'
+      response.code.should eql("401")
+    end
+
+    it "send create with params to InterventionRequest" do
+
+      InterventionRequest.should_receive(:create).with(@api_credential.openerp_context, JSON.load(valid_data)[:intervention_request]).and_return({success:true,id:@intervention_request.id})
+      request valid_data
+    end
+
+
+    context "sucessfull" do
+
+      def stubbed_intervention_request_create
+        InterventionRequest.stub(:create).and_return({success: true, errors: nil, id: @intervention_request.id})
+      end
+
+
+      before(:each) { stubbed_intervention_request_create }
+
+      it "responds with JSON" do
+        request valid_data
+        response.header['content-type'].should include('application/json')
+      end
+
+      it "responds with 200 http status" do
+        request valid_data
+        response.code.should eq('200')
+      end
+      it "contains success: true" do
+        request valid_data
+        JSON.load(response.body)["success"].should eql(true)
+      end
+      it "contains id field" do
+        request valid_data
+        JSON.load(response.body)["id"].should eql(@intervention_request.id)
+      end
+    end
+
+    #
+    # TODO : args passed to post are plain ruby, it should be JSON ? suspected to missusing this test case
+    #
+    context "failure" do
+      before(:each) do
+        fucked_data
+      end
+
+      def fucked_data
+        @fucked_data = {"intervention_request" =>{"foo"=>"bar"}}
+      end
+
+      def intervention_request_creation_failure
+        InterventionRequest.should_receive(:create).with(@api_credential.openerp_context,@fucked_data["intervention_request"]).and_return({success:false,errors:["Data screwed"]})
+      end
+
+      it "responds with 400 http status" do
+        intervention_request_creation_failure
+        request fucked_data
+        response.code.should eql("400")
+      end
+
+      it "contains success : false" do
+        intervention_request_creation_failure
+        request fucked_data
+        JSON.parse(response.body)['success'].should be false
+      end
+
+      it "contains errors field" do
+        intervention_request_creation_failure
+        request fucked_data
+        JSON.parse(response.body)['errors'].should_not be(blank?)
+      end
+    end
+
+  end
+
 end

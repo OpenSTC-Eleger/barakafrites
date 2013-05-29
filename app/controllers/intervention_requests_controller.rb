@@ -39,6 +39,7 @@ class InterventionRequestsController < ApplicationController
   # TODO : Refactor to avoid code duplication
   #
   def create
+
     @create=  InterventionRequest.create(user_context, params[:intervention_request])
     if @create[:success]
       respond_to { |format| format.json { render :json => @create } }
