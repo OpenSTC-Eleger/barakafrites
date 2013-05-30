@@ -16,10 +16,18 @@ class InterventionRequestsController < ApplicationController
   end
 
   def show
-    @intervention_request = InterventionRequest.find(user_context, [params[:id]]).first
-    respond_to do |format|
-      format.json {render :json => @intervention_request}
+    @intervention_request = InterventionRequest.find(user_context, [params[:id]])
+    # TODO : Refactor this, weird condition
+    if !@intervention_request.respond_to?(:keys)
+        respond_to do |format|
+          format.json {render :json => @intervention_request.first}
+        end
+      else
+        respond_to do |format|
+          format.json {render :json => @intervention_request, :status => 400}
+        end
     end
+
   end
 
   def update
