@@ -52,7 +52,7 @@ describe "/intervention_requests" do
 
   describe "POST" do
     def request(data = nil)
-      post '/intervention_requests', data, {'HTTP_ACCEPT' => 'application/json','HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""}
+      post '/intervention_requests', data, {'HTTP_ACCEPT' => 'application/json', 'HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""}
     end
 
     def valid_data
@@ -85,7 +85,7 @@ DATA
 
     it "send create with params to InterventionRequest" do
 
-      InterventionRequest.should_receive(:create).with(@api_credential.openerp_context, JSON.load(valid_data)[:intervention_request]).and_return({success:true,id:@intervention_request.id})
+      InterventionRequest.should_receive(:create).with(@api_credential.openerp_context, JSON.load(valid_data)[:intervention_request]).and_return({success: true, id: @intervention_request.id})
       request valid_data
     end
 
@@ -127,11 +127,11 @@ DATA
       end
 
       def fucked_data
-        @fucked_data = {"intervention_request" =>{"foo"=>"bar"}}
+        @fucked_data = {"intervention_request" => {"foo" => "bar"}}
       end
 
       def intervention_request_creation_failure
-        InterventionRequest.should_receive(:create).with(@api_credential.openerp_context,@fucked_data["intervention_request"]).and_return({success:false,errors:["Data screwed"]})
+        InterventionRequest.should_receive(:create).with(@api_credential.openerp_context, @fucked_data["intervention_request"]).and_return({success: false, errors: ["Data screwed"]})
       end
 
       it "responds with 400 http status" do
@@ -155,4 +155,93 @@ DATA
 
   end
 
+end
+
+describe "/intervention_requests/:id" do
+
+  # Set authentication token
+  def create_token
+    @api_credential = FactoryGirl.create(:api_credential)
+  end
+
+  def create_intervention_request
+    @intervention_request = FactoryGirl.build_stubbed(:intervention_request)
+  end
+
+  # Before each example we ensure that authentication token exists
+  before(:each) do
+    create_token
+    create_intervention_request
+  end
+
+  describe "GET" do
+
+    # TODO : HTTP header should be shared between requests definitions to avoid duplication
+
+    # Shortcut method
+    def request(data = nil)
+      get "/intervention_requests/#{@intervention_request.id}",  data, {'HTTP_ACCEPT' => 'application/json', 'HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""}
+    end
+
+    it "read intervention request with :id" do
+      InterventionRequest.should_receive(:find).with(@api_credential.openerp_context, [@intervention_request.id.to_s]).and_return([@intervention_request])
+      request
+    end
+
+    it "require authentication" do
+      get "/intervention_requests/#{@intervention_request.id}"
+      response.code.should eql("401")
+    end
+
+    context "read is successful" do
+      # Shortcut to stub the find method on model and return successful read
+      def successful_read_stubbed
+        InterventionRequest.stub(:find).with(@api_credential.openerp_context,[@intervention_request.id.to_s]).and_return([@intervention_request])
+      end
+
+      before(:each) do
+        successful_read_stubbed
+        request
+      end
+
+      it "render the intervention request" do
+        response.body.should include(@intervention_request.to_json)
+      end
+
+      it "responds with code 200" do
+        response.code.should eql("200")
+      end
+      it "responds with json" do
+        response.header['Content-Type'].should include('application/json')
+      end
+    end
+
+    context "read fails" do
+      # Shortcut method to stub object read failure
+
+      def fail_read_stubbed
+        InterventionRequest.stub(:find).with(@api_credential.openerp_context,[@intervention_request.id.to_s]).and_return({error:false})
+      end
+
+      before(:each) do
+        fail_read_stubbed
+        request
+      end
+
+      it "responds with 400" do
+        response.code.should eql("400")
+      end
+      it "responds with json" do
+        response.header['Content-Type'].should include('application/json')
+      end
+
+      it "render hash" do
+        JSON.parse(response.body).class.should be Hash
+      end
+
+      it "render error message" do
+        JSON.parse(response.body).keys.should include('errors')
+      end
+    end
+  end
 end
