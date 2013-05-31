@@ -1,10 +1,8 @@
 require 'spec_helper'
+require 'requests/requests_shared_examples'
 
 describe "/intervention_requests" do
-
-  def create_token
-    @api_credential = FactoryGirl.create(:api_credential)
-  end
+  include RequestsSpecHelper
 
   ##
   # TODO : Since models are stubbed there are needs to heavy test models and/or enhance stubbing strategies
@@ -16,30 +14,20 @@ describe "/intervention_requests" do
   end
 
   before(:each) do
-    create_token
+    create_api_credential
     stubbed_model_interface
   end
 
   describe "GET" do
-
-    def request
-      get '/intervention_requests', nil, {'HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""}
+    def set_request
+      @verb = :get
+      @uri = '/intervention_requests'
     end
+    before(:each) { set_request }
 
-    ##
-    # TODO : Extract shared tests in shared_exmaples
-    #
-    it "require authentication" do
-      get '/intervention_requests'
-      response.code.should eql("401")
-    end
+    it_behaves_like "any API request"
 
-    it "respond with json" do
-      request
-      response.header['content-type'].should include('application/json')
-    end
-
-    it "is a array" do
+    it "is an array" do
       request
       JSON.load(response.body).should be_an Array
     end
@@ -51,9 +39,12 @@ describe "/intervention_requests" do
   end
 
   describe "POST" do
-    def request(data = nil)
-      post '/intervention_requests', data, {'HTTP_ACCEPT' => 'application/json', 'HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""}
+    def set_request
+      @verb = :post
+      @uri = '/intervention_requests'
     end
+    before(:each) { set_request }
+
 
     def valid_data
       @valid_data = <<DATA
@@ -78,10 +69,7 @@ describe "/intervention_requests" do
 DATA
     end
 
-    it "require authentication" do
-      post '/intervention_requests'
-      response.code.should eql("401")
-    end
+    it_behaves_like "any API request"
 
     it "send create with params to InterventionRequest" do
 
@@ -99,10 +87,7 @@ DATA
 
       before(:each) { stubbed_intervention_request_create }
 
-      it "responds with JSON" do
-        request valid_data
-        response.header['content-type'].should include('application/json')
-      end
+      it_behaves_like "any API request"
 
       it "responds with 200 http status" do
         request valid_data
@@ -134,6 +119,8 @@ DATA
         InterventionRequest.should_receive(:create).with(@api_credential.openerp_context, @fucked_data["intervention_request"]).and_return({success: false, errors: ["Data screwed"]})
       end
 
+      it_behaves_like "any API request"
+
       it "responds with 400 http status" do
         intervention_request_creation_failure
         request fucked_data
@@ -158,40 +145,37 @@ DATA
 end
 
 describe "/intervention_requests/:id" do
-
-  # Set authentication token
-  def create_token
-    @api_credential = FactoryGirl.create(:api_credential)
-  end
+  include RequestsSpecHelper
 
   def create_intervention_request
     @intervention_request = FactoryGirl.build_stubbed(:intervention_request)
   end
 
-  # Before each example we ensure that authentication token exists
+  def stub_read
+    InterventionRequest.stub(:read).and_return([])
+  end
+
   before(:each) do
-    create_token
+    stub_read
+    create_api_credential
     create_intervention_request
   end
 
   describe "GET" do
 
-    # TODO : HTTP header should be shared between requests definitions to avoid duplication
-
-    # Shortcut method
-    def request(data = nil)
-      get "/intervention_requests/#{@intervention_request.id}",  data, {'HTTP_ACCEPT' => 'application/json', 'HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""}
+    def set_request
+      @verb = :get
+      @uri = "/intervention_requests"
+      @id = @intervention_request.id
     end
+
+    before(:each) {set_request}
 
     it "read intervention request with :id" do
       InterventionRequest.should_receive(:find).with(@api_credential.openerp_context, [@intervention_request.id.to_s]).and_return([@intervention_request])
       request
     end
 
-    it "require authentication" do
-      get "/intervention_requests/#{@intervention_request.id}"
-      response.code.should eql("401")
-    end
 
     context "read is successful" do
       # Shortcut to stub the find method on model and return successful read
