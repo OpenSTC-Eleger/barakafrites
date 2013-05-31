@@ -220,7 +220,7 @@ describe "/intervention_requests/:id" do
       # Shortcut method to stub object read failure
 
       def fail_read_stubbed
-        InterventionRequest.stub(:find).with(@api_credential.openerp_context,[@intervention_request.id.to_s]).and_return({error:false})
+        InterventionRequest.stub(:find).with(@api_credential.openerp_context,[@intervention_request.id.to_s]).and_return({errors:["Blaaaaaammmmmm"]})
       end
 
       before(:each) do
@@ -244,4 +244,76 @@ describe "/intervention_requests/:id" do
       end
     end
   end
+
+  describe "PUT" do
+
+    def request(data = nil)
+      put "/intervention_requests/#{@intervention_request.id}",  data, {'HTTP_ACCEPT' => 'application/json', 'HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""}
+    end
+
+=begin
+    it "require authentication" do
+      put "/intervention_requests/0", nil, {}
+      response.should eql("401")
+    end
+=end
+
+    it "updates InternventionRequest object by :id" do
+      InterventionRequest.should_receive(:write).with(@api_credential.openerp_context,[@intervention_request.id.to_s], {'partner_id' => "4"}).and_return({success:true,errors: []})
+      request({intervention_request: {partner_id: 4}})
+    end
+
+    context "Success" do
+      def stub_write_success
+        InterventionRequest.stub(:write).with(@api_credential.openerp_context, [@intervention_request.id.to_s], {'partner_id' => "4"}).and_return({success: true, errors:false})
+      end
+
+      before(:each) {
+        stub_write_success
+        request({intervention_request: {partner_id: 4}})
+
+      }
+
+      it "responds with 200" do
+        response.code.should eql("200")
+      end
+
+      it "responds with JSON" do
+        response.header['Content-Type'].should include('application/json')
+      end
+
+      it "render {success: true, errors:false}" do
+        JSON.parse(response.body)['success'].should be true
+        JSON.parse(response.body)['errors'].should be false
+      end
+
+    end
+
+    context "Failure" do
+
+      def stub_write_failure
+        InterventionRequest.stub(:write).with(@api_credential.openerp_context, [@intervention_request.id.to_s], {'partner_id' => "4"}).and_return({success: false, errors:['message']})
+      end
+
+      before(:each) do
+        stub_write_failure
+        request({intervention_request: {partner_id: 4}})
+      end
+
+      it "responds with JSON" do
+        response.header['Content-Type'].should include('application/json')
+      end
+
+      it "reponds with code 400" do
+        response.code.should eql("400")
+      end
+
+      it "render {success: false, errors: ['message']}" do
+        JSON.parse(response.body)['success'].should be false
+        JSON.parse(response.body)['errors'].first.should eql('message')
+      end
+    end
+
+  end
+
 end
