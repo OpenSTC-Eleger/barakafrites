@@ -188,6 +188,8 @@ describe "/intervention_requests/:id" do
         request
       end
 
+      it_behaves_like "any API request"
+
       it "render the intervention request" do
         response.body.should include(@intervention_request.to_json)
       end
@@ -195,13 +197,12 @@ describe "/intervention_requests/:id" do
       it "responds with code 200" do
         response.code.should eql("200")
       end
-      it "responds with json" do
-        response.header['Content-Type'].should include('application/json')
-      end
     end
 
     context "read fails" do
       # Shortcut method to stub object read failure
+
+      it_behaves_like "any API request"
 
       def fail_read_stubbed
         InterventionRequest.stub(:find).with(@api_credential.openerp_context,[@intervention_request.id.to_s]).and_return({errors:["Blaaaaaammmmmm"]})
@@ -214,9 +215,6 @@ describe "/intervention_requests/:id" do
 
       it "responds with 400" do
         response.code.should eql("400")
-      end
-      it "responds with json" do
-        response.header['Content-Type'].should include('application/json')
       end
 
       it "render hash" do
@@ -231,16 +229,14 @@ describe "/intervention_requests/:id" do
 
   describe "PUT" do
 
-    def request(data = nil)
-      put "/intervention_requests/#{@intervention_request.id}",  data, {'HTTP_ACCEPT' => 'application/json', 'HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""}
+    def set_request
+      @verb = :put
+      @uri = "/intervention_requests"
+      @id = @intervention_request.id
+      @data = {'intervention_request' => {'partner_id' => "4"}}
     end
 
-=begin
-    it "require authentication" do
-      put "/intervention_requests/0", nil, {}
-      response.should eql("401")
-    end
-=end
+    before(:each) { set_request}
 
     it "updates InternventionRequest object by :id" do
       InterventionRequest.should_receive(:write).with(@api_credential.openerp_context,[@intervention_request.id.to_s], {'partner_id' => "4"}).and_return({success:true,errors: []})
@@ -258,13 +254,12 @@ describe "/intervention_requests/:id" do
 
       }
 
+      it_behaves_like "any API request"
+
       it "responds with 200" do
         response.code.should eql("200")
       end
 
-      it "responds with JSON" do
-        response.header['Content-Type'].should include('application/json')
-      end
 
       it "render {success: true, errors:false}" do
         JSON.parse(response.body)['success'].should be true
@@ -284,9 +279,7 @@ describe "/intervention_requests/:id" do
         request({intervention_request: {partner_id: 4}})
       end
 
-      it "responds with JSON" do
-        response.header['Content-Type'].should include('application/json')
-      end
+      it_behaves_like "any API request"
 
       it "reponds with code 400" do
         response.code.should eql("400")
