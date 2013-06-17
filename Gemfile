@@ -30,6 +30,8 @@ gem 'hashie'
 gem 'sqlite3'
 gem 'jquery-rails'
 
+gem 'bintje', :path => '/home/cedric/Dev/Siclic/bintje'
+
 # Test libraries
 group :development, :test do
   gem 'rspec-rails'
