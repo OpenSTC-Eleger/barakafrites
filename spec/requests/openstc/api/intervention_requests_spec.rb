@@ -1,9 +1,12 @@
 require 'spec_helper'
 require 'requests/requests_shared_examples'
 
-describe "/intervention_requests" do
+describe "/openstc/api/intervention_requests" do
   include RequestsSpecHelper
 
+  def root_uri
+    '/openstc/api/intervention_requests'
+  end
   def stubbed_model_interface
     @intervention_request = FactoryGirl.build_stubbed(:intervention_request)
   end
@@ -16,7 +19,7 @@ describe "/intervention_requests" do
   describe "GET" do
     def set_request
       @verb = :get
-      @uri = '/intervention_requests'
+      @uri = root_uri
     end
 
     before(:each) do
@@ -44,7 +47,7 @@ describe "/intervention_requests" do
 
     def set_request
       @verb = :post
-      @uri = '/intervention_requests'
+      @uri = root_uri
     end
 
     before(:each) do
@@ -92,8 +95,12 @@ describe "/intervention_requests" do
 
 end
 
-describe "/intervention_requests/:id" do
+describe "/openstc/api/intervention_requests/:id" do
   include RequestsSpecHelper
+
+  def root_uri
+    '/openstc/api/intervention_requests'
+  end
 
   def create_intervention_request
     @intervention_request = FactoryGirl.build_stubbed(:intervention_request)
@@ -109,7 +116,7 @@ describe "/intervention_requests/:id" do
 
     def set_request
       @verb = :get
-      @uri = "/intervention_requests"
+      @uri = root_uri
       @id = @intervention_request.id
     end
 
@@ -167,7 +174,7 @@ describe "/intervention_requests/:id" do
 
     def set_request
       @verb = :put
-      @uri = "/intervention_requests"
+      @uri = root_uri
       @id = 1
       @data = {'intervention_request' => BintjeStub::Write.default_values}
     end

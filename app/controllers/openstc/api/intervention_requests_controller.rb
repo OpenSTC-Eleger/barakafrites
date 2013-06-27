@@ -1,9 +1,5 @@
-##
-# Intervention Requests API controller
-# TODO : Refactor to use respond with
-#
+class Openstc::Api::InterventionRequestsController < ApplicationController
 
-class InterventionRequestsController < ApplicationController
   before_filter :check_authenticated?
 
 
