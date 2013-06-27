@@ -6,5 +6,4 @@ module Openerp
   @@object = BarakafritesConfig.get[:openerp][:object]
   @@base = BarakafritesConfig.get[:openerp][:base]
 
-
 end

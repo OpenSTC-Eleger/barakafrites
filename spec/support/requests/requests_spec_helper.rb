@@ -6,21 +6,21 @@ module RequestsSpecHelper
 
   def anonymous_request
     if @id
-      uri = [@uri, @id ].join('/')
+      uri = [@uri, @id].join('/')
     else
       uri = @uri
     end
-    send(@verb,uri,@data,{HTTP_ACCEPT: 'application/json'})
+    send(@verb, uri, @data, {HTTP_ACCEPT: 'application/json'})
   end
 
-  def request(data=nil)
+  def send_set_request(data=nil)
     @data ||= data
     if @id
-      uri = [@uri, @id ].join('/')
+      uri = [@uri, @id].join('/')
     else
       uri = @uri
     end
-    send(@verb,uri,@data,{HTTP_ACCEPT: 'application/json', 'HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""})
+    send(@verb, uri, @data, {HTTP_ACCEPT: 'application/json', 'HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""})
   end
 
 end

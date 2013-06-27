@@ -8,52 +8,28 @@ class InterventionRequestsController < ApplicationController
 
 
   def index
-    @intervention_requests_ids = InterventionRequest.where(user_context)
-    @intervention_requests = InterventionRequest.find(user_context,@intervention_requests_ids)
-    respond_to do |format|
-      format.json {render :json => @intervention_requests}
-    end
+    @filters = params[:filters] || []
+    @fields = params[:fields] || []
+    @intervention_requests = InterventionRequest.find_all(user_context,@filters,@fields)
+    backend_response_to_json @intervention_requests
   end
 
   def show
-    @intervention_request = InterventionRequest.find(user_context, [params[:id]])
-    # TODO : Refactor this, weird condition
-    if !@intervention_request.respond_to?(:keys)
-        respond_to do |format|
-          format.json {render :json => @intervention_request.first}
-        end
-      else
-        respond_to do |format|
-          format.json {render :json => @intervention_request, :status => 400}
-        end
-    end
-
+    @intervention_request = InterventionRequest.find_one(user_context, params[:id])
+    backend_response_to_json @intervention_request
   end
 
   def update
     @update = InterventionRequest.write(user_context, [params[:id]],params[:intervention_request])
-    if @update[:success]
-      respond_to do |format|
-        format.json {render :json => @update}
-      end
-    else
-      respond_to do |format|
-        format.json { render :json => @update, :status =>  400}
-      end
-    end
+    backend_response_to_json @update
   end
 
   ##
   # TODO : Refactor to avoid code duplication
   #
   def create
-
-    @create=  InterventionRequest.create(user_context, params[:intervention_request])
-    if @create[:success]
-      respond_to { |format| format.json { render :json => @create } }
-    else
-      respond_to {|format| format.json {render :json => @create, :status => 400}}
-    end
+    @create=  InterventionRequest.create_and_return(user_context, params[:intervention_request])
+    backend_response_to_json @create
   end
 
 end

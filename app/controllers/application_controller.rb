@@ -4,6 +4,20 @@ class ApplicationController < ActionController::Base
   helper_method :user_context
   session :off
 
+
+  def backend_response_to_json(bintje_response)
+    if bintje_response.success
+      respond_to do |format|
+        format.json {render :json => bintje_response.content}
+      end
+    else
+      respond_to do |format|
+        format.json {render :json => bintje_response.errors, :status => 400}
+      end
+    end
+  end
+
+
   private
 
   def current_user

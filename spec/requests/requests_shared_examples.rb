@@ -2,10 +2,6 @@ module RequestsSharedExamples
   include RequestsSpecHelper
 
   shared_examples_for "any API request" do
-    before(:each) do
-      create_api_credential
-      request
-    end
 
     it "responds with JSON" do
       response.header['Content-Type'].should include('application/json')
@@ -24,7 +20,23 @@ module RequestsSharedExamples
 
   end
 
-  shared_examples_for "any sucessfull API request" do
+  shared_examples_for "any failed API request" do
+
+    it "responds with 400" do
+      response.code.should eql("400")
+    end
+
+    it "render Array of Errors" do
+      JSON.parse(response.body).class.should be Array
+    end
+
+    it "Error is a hash" do
+      JSON.parse(response.body).first.should be_an Hash
+    end
+
+    it "Error Hash include faultCode" do
+      JSON.parse(response.body).first.keys.should include 'faultCode'
+    end
 
   end
 
