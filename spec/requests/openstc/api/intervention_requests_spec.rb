@@ -61,7 +61,7 @@ describe "/openstc/api/intervention_requests" do
 
     it "send create with params to InterventionRequest" do
       InterventionRequest.should_receive(:create)
-      .with(@api_credential.openerp_context, BintjeStub::Create.default_values)
+      .with(@api_credential.open_object_context, BintjeStub::Create.default_values)
       send_set_request(request_data)
     end
 
@@ -81,7 +81,7 @@ describe "/openstc/api/intervention_requests" do
 
     context "failure" do
       before(:each) do
-        BintjeStub::Create.fail_result(klass: InterventionRequest, values: BintjeStub::Create.default_values, result: Openerp::BackendResponse.new(success: false, errors: [{faultCode: "FAILED !!!"}]))
+        BintjeStub::Create.fail_result(klass: InterventionRequest, values: BintjeStub::Create.default_values, result: OpenObject::BackendResponse.new(success: false, errors: [{faultCode: "FAILED !!!"}]))
         send_set_request request_data
       end
 
@@ -131,8 +131,8 @@ describe "/openstc/api/intervention_requests/:id" do
 
     it "read intervention request with :id" do
       InterventionRequest.should_receive(:find_one)
-      .with(@api_credential.openerp_context, @intervention_request.id.to_s)
-      .and_return(Openerp::BackendResponse.new(success: true, content: [@intervention_request]))
+      .with(@api_credential.open_object_context, @intervention_request.id.to_s)
+      .and_return(OpenObject::BackendResponse.new(success: true, content: [@intervention_request]))
       send_set_request
     end
 
@@ -186,8 +186,8 @@ describe "/openstc/api/intervention_requests/:id" do
 
     it "updates InternventionRequest object by :id" do
       InterventionRequest.should_receive(:write)
-      .with(@api_credential.openerp_context, ["1"], BintjeStub::Write.default_values)
-      .and_return(Openerp::BackendResponse.new(success: true, content: BintjeStub::Write.default_result))
+      .with(@api_credential.open_object_context, ["1"], BintjeStub::Write.default_values)
+      .and_return(OpenObject::BackendResponse.new(success: true, content: BintjeStub::Write.default_result))
       send_set_request
     end
 

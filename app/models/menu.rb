@@ -1,4 +1,4 @@
-require 'openerp'
+require 'open_object'
 
 class Menu
 

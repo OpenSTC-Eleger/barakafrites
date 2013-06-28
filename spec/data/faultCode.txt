@@ -1,0 +1,1 @@
+warning -- Erreur d'accès Opération interdite par les règles d'accès, ou effectué sur un document déjà supprimé (Opération : lecture, Type de document: openstc.ask).

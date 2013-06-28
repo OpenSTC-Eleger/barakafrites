@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_user_context(credential)
-    @user_context = {uid: credential.openerp_uid, pwd: credential.openerp_pwd, dbname: credential.openerp_dbname}
+    @user_context = {uid: credential.open_object_uid, pwd: credential.open_object_pwd, dbname: credential.open_object_dbname}
   end
 
   def user_context

@@ -1,0 +1,5 @@
+XMLRPC::FaultException ():
+app/controllers/openstc/api/intervention_requests_controller.rb:19:in `update'
+Rendered /home/cedric/.rvm/gems/ruby-2.0.0-p195@barakafrites/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /home/cedric/.rvm/gems/ruby-2.0.0-p195@barakafrites/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (0.6ms)
+Rendered /home/cedric/.rvm/gems/ruby-2.0.0-p195@barakafrites/gems/actionpack-3.2.13/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (30.2ms)

@@ -1,5 +1,5 @@
 development:
-  openerp:
+  open_object:
     host: 'octm-dev.siclic.fr'
     port: '8069'
     common: '/xmlrpc/common'
@@ -7,7 +7,7 @@ development:
   root_menu: 'OpenSTM'
 
 test:
-  openerp:
+  open_object:
     host: 'octm-dev.siclic.fr'
     port: '8069'
     common: '/xmlrpc/common'

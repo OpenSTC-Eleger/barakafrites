@@ -1,9 +1,11 @@
-module Openerp
+module OpenObject
 
-  @@host = BarakafritesConfig.get[:openerp][:host]
-  @@port = BarakafritesConfig.get[:openerp][:port]
-  @@common = BarakafritesConfig.get[:openerp][:common]
-  @@object = BarakafritesConfig.get[:openerp][:object]
-  @@base = BarakafritesConfig.get[:openerp][:base]
+  @@host = BarakafritesConfig.get[:open_object][:host]
+  @@port = BarakafritesConfig.get[:open_object][:port]
+  @@common = BarakafritesConfig.get[:open_object][:common]
+  @@object = BarakafritesConfig.get[:open_object][:object]
+  @@base = BarakafritesConfig.get[:open_object][:base]
 
 end
+
+OpenObject.logger = Rails.logger

@@ -6,23 +6,23 @@ describe ApiCredential do
     @api_credential ||= FactoryGirl.create(:api_credential)
   end
 
-  describe "#openerp_context" do
+  describe "#open_object_context" do
     before(:each) do
       set_api_credential
     end
 
     it "outputs hash" do
-      @api_credential.openerp_context.class.should be Hash
+      @api_credential.open_object_context.class.should be Hash
     end
 
-    it "output hash has key uid filled with openerp_uid" do
-      @api_credential.openerp_context[:uid].should eql(@api_credential.openerp_uid)
+    it "output hash has key uid filled with open_object_uid" do
+      @api_credential.open_object_context[:uid].should eql(@api_credential.open_object_uid)
     end
-    it "output hash has key pwd filled with openerp_pwd" do
-      @api_credential.openerp_context[:pwd].should eql(@api_credential.openerp_pwd)
+    it "output hash has key pwd filled with open_object_pwd" do
+      @api_credential.open_object_context[:pwd].should eql(@api_credential.open_object_pwd)
     end
-    it "outpur hash has key dbname filled with openerp_dbname" do
-      @api_credential.openerp_context[:dbname].should eql(@api_credential.openerp_dbname)
+    it "outpur hash has key dbname filled with open_object_dbname" do
+      @api_credential.open_object_context[:dbname].should eql(@api_credential.open_object_dbname)
     end
   end
 

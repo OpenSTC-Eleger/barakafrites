@@ -2,7 +2,7 @@ module OpenObjectModel
   def self.included(base)
     base.class_eval do
       include ActiveModel::Model
-      include Openerp
+      include OpenObject
 
       attr_accessor :href
 

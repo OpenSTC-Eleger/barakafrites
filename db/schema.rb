@@ -11,15 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130522081552) do
+ActiveRecord::Schema.define(:version => 20130628091527) do
 
   create_table "api_credentials", :force => true do |t|
     t.string   "access_token"
-    t.string   "openerp_pwd"
-    t.string   "openerp_dbname"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "openerp_uid"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "open_object_uid"
+    t.string   "open_object_dbname"
+    t.string   "open_object_pwd"
   end
 
   add_index "api_credentials", ["access_token"], :name => "index_api_credentials_on_access_token"

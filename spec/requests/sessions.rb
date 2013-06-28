@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe "Sessions" do
 
-  def stubbed_openerp
-    Openerp.stub(:login).and_return({})
-    Openerp.stub(:read).and_return({})
-    Openerp.stub(:search).and_return({})
+  def stubbed_open_object
+    OpenObject.stub(:login).and_return({})
+    OpenObject.stub(:read).and_return({})
+    OpenObject.stub(:search).and_return({})
   end
 
-  before(:each) { stubbed_openerp }
+  before(:each) { stubbed_open_object }
 
   describe "Login" do
 
@@ -36,7 +36,7 @@ describe "Sessions" do
     end
 
     context "Fail" do
-      before(:each) { Openerp.stub(:login).and_return(false) }
+      before(:each) { OpenObject.stub(:login).and_return(false) }
       it "responds with 'application/json' content type" do
         post "/sessions", :login => 'test', :password => 'test', :dbname => 'test'
         expect(response.header['content-type']).to include('application/json')

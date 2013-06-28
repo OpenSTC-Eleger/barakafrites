@@ -1,4 +1,4 @@
-module OpenerpSpecHelper
+module OpenObjectSpecHelper
 
 
 
