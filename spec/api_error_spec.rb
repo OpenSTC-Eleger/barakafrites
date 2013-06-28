@@ -3,10 +3,20 @@ require 'spec_helper'
 describe 'ApiError' do
 
   shared_examples_for "any API Error" do
-    it "hold error code"
-    it "hold error message"
-    it "hold backtrace"
   end
+
+  let(:api_error) {ApiError.new}
+
+  it "hold error code" do
+    api_error.should respond_to(:code)
+  end
+  it "hold error message" do
+    api_error.should respond_to(:message)
+  end
+  it "hold backtrace" do
+    api_error.should respond_to(:backtrace)
+  end
+
 
   context "Initialize from open_object backend response" do
     let(:backend_response) do
@@ -29,6 +39,18 @@ describe 'ApiError' do
     end
 
 
+  end
+
+end
+
+describe 'ErrorCodes' do
+
+  it "sould load definifion from yaml file" do
+    ApiError::ErrorCode.list.should eql YAML.load(File.new('config/api_error_codes.yml'))
+  end
+
+  it "0 = Unknown" do
+    ApiError::ErrorCode.new(0).text.should eql 'Unknown'
   end
 
 end
