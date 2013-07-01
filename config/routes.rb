@@ -10,6 +10,7 @@ Barakafrites::Application.routes.draw do
   namespace :openstc do
     namespace :api do
       resources :intervention_requests, :defaults => {:format => 'json'}
+      resources :sites, :defaults => {:format => 'json'}
     end
 
   end

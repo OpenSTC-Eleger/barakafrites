@@ -20,7 +20,7 @@ module RequestsSpecHelper
     else
       uri = @uri
     end
-    send(@verb, uri, @data, {HTTP_ACCEPT: 'application/json', 'HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""})
+    send(@verb, uri, @data, {'HTTP_ACCEPT' => 'application/json', 'HTTP_AUTHORIZATION' => "Token token=\"#{@api_credential.access_token}\""})
   end
 
 end

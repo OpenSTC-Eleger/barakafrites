@@ -26,16 +26,21 @@ module OpenObjectModel
       search_response = self.search(user_context, filters)
       ids = search_response.content
       result = []
-      if ids.size > 0
-        read_response = self.read(user_context, ids, fields)
-        data = read_response.content
-        data.each do |e|
-          result << self.new(e)
+      if search_response.success
+        read_response = OpenObject::BackendResponse.new
+        if ids && ids.size > 0
+          read_response = self.read(user_context, ids, fields)
+          data = read_response.content
+          data.each do |e|
+            result << self.new(e)
+          end
         end
-       end
-      result
-      read_response.content = result
-      read_response
+        result
+        read_response.content = result
+        return read_response
+      else
+        return search_response
+      end
     end
 
 
@@ -49,8 +54,13 @@ module OpenObjectModel
       read_response
     end
 
-    def create_and_return(user_context,params)
-      create_response = self.create(user_context,params)
+
+    def write_one(user_context, id, attributes)
+      self.write(user_context, [id.to_i], attributes)
+    end
+
+    def create_and_return(user_context, params)
+      create_response = self.create(user_context, params)
       if create_response.success
         create_response.content = self.new(:id => create_response.content)
       end

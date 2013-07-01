@@ -6,7 +6,7 @@ module BintjeStub
 
   module Search
     def self.default_args
-      [['field', 'operator', 'value']]
+      [['field', 'operator', 'value'], ['a', 'b', 'c']]
     end
 
     def self.default_result
@@ -20,6 +20,11 @@ module BintjeStub
     def self.success_result(klass: OpenObject, args: self.default_args, result: self.default_result)
       self.method_and_args(klass: klass, args: args)
       .and_return(OpenObject::BackendResponse.new(success: true, errors: nil, content: result))
+    end
+
+    def self.fail_result(klass: OpenObject, args: self.default_args, result: self.default_result)
+      self.method_and_args(klass: klass, args: args)
+      .and_return(OpenObject::BackendResponse.new(success: false, errors: [{faultCode: "FAILED !!!"}], content: result))
     end
   end
 
@@ -123,12 +128,12 @@ module BintjeStub
     end
 
     def self.success_result(klass: OpenObject, ids: self.default_ids, values: self.default_values, result: self.default_result)
-      self.method_and_args(klass: klass, ids:ids ,values: values)
+      self.method_and_args(klass: klass, ids: ids, values: values)
       .and_return(OpenObject::BackendResponse.new(success: true, errors: nil, content: result))
     end
 
-    def self.fail_result(klass: OpenObject,  ids: self.default_ids, values: self.default_values, result: self.default_result)
-      self.method_and_args(klass: klass, ids:ids, values: values)
+    def self.fail_result(klass: OpenObject, ids: self.default_ids, values: self.default_values, result: self.default_result)
+      self.method_and_args(klass: klass, ids: ids, values: values)
       .and_return(OpenObject::BackendResponse.new(success: false, errors: [{faultCode: "FAILED !!!"}], content: result))
     end
   end
