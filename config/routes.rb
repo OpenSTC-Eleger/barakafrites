@@ -6,10 +6,14 @@ Barakafrites::Application.routes.draw do
     end
   end
 
-  namespace :api do
+  namespace :api, :defaults => {:format => 'json'} do
     namespace :openstc do
-      resources :intervention_requests, :defaults => {:format => 'json'}
-      resources :sites, :defaults => {:format => 'json'}
+      resources :intervention_requests
+      resources :sites
+    end
+
+    namespace :open_object do
+      resources :users
     end
 
   end
