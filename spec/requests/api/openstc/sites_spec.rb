@@ -1,11 +1,11 @@
 require 'spec_helper'
 require 'requests/requests_shared_examples'
 
-describe '/openstc/api/sites' do
+describe '/api/openstc/sites' do
   include RequestsSpecHelper
 
   before(:each) do
-    @uri = '/openstc/api/sites'
+    @uri = '/api/openstc/sites'
   end
 
   describe 'GET' do
@@ -68,11 +68,11 @@ describe '/openstc/api/sites' do
 
 end
 
-describe '/openstc/api/sites/:id' do
+describe '/api/openstc/sites/:id' do
   include RequestsSpecHelper
 
   before(:each) do
-    @uri = '/openstc/api/sites'
+    @uri = '/api/openstc/sites'
     @id = 2
     create_api_credential
   end

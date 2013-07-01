@@ -6,15 +6,13 @@ Barakafrites::Application.routes.draw do
     end
   end
 
-
-  namespace :openstc do
-    namespace :api do
+  namespace :api do
+    namespace :openstc do
       resources :intervention_requests, :defaults => {:format => 'json'}
       resources :sites, :defaults => {:format => 'json'}
     end
 
   end
-
 
 
   # The priority is based upon order of creation:

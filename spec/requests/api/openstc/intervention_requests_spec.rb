@@ -1,11 +1,11 @@
 require 'spec_helper'
 require 'requests/requests_shared_examples'
 
-describe "/openstc/api/intervention_requests" do
+describe "/api/openstc/intervention_requests" do
   include RequestsSpecHelper
 
   def root_uri
-    '/openstc/api/intervention_requests'
+    '/api/openstc/intervention_requests'
   end
   def stubbed_model_interface
     @intervention_request = FactoryGirl.build_stubbed(:intervention_request)
@@ -95,11 +95,11 @@ describe "/openstc/api/intervention_requests" do
 
 end
 
-describe "/openstc/api/intervention_requests/:id" do
+describe "/api/openstc/intervention_requests/:id" do
   include RequestsSpecHelper
 
   def root_uri
-    '/openstc/api/intervention_requests'
+    '/api/openstc/intervention_requests'
   end
 
   def create_intervention_request
