@@ -1,4 +1,4 @@
-class InterventionRequest
+class Openstc::InterventionRequest
   include OpenObjectModel
   set_open_object_model 'openstc.ask'
   

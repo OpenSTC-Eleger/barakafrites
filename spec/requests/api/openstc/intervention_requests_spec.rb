@@ -24,8 +24,8 @@ describe "/api/openstc/intervention_requests" do
 
     before(:each) do
       set_request
-      BintjeStub::Search.success_result(klass: InterventionRequest, args: [])
-      BintjeStub::Read.success_result(klass: InterventionRequest, fields: [])
+      BintjeStub::Search.success_result(klass: Openstc::InterventionRequest, args: [])
+      BintjeStub::Read.success_result(klass: Openstc::InterventionRequest, fields: [])
       send_set_request
     end
 
@@ -52,15 +52,15 @@ describe "/api/openstc/intervention_requests" do
 
     before(:each) do
       set_request
-      BintjeStub::Create.success_result(klass: InterventionRequest)
+      BintjeStub::Create.success_result(klass: Openstc::InterventionRequest)
       send_set_request request_data
     end
 
 
     it_behaves_like "any API request"
 
-    it "send create with params to InterventionRequest" do
-      InterventionRequest.should_receive(:create)
+    it "send create with params to Openstc::InterventionRequest" do
+      Openstc::InterventionRequest.should_receive(:create)
       .with(@api_credential.open_object_context, BintjeStub::Create.default_values)
       send_set_request(request_data)
     end
@@ -81,7 +81,7 @@ describe "/api/openstc/intervention_requests" do
 
     context "failure" do
       before(:each) do
-        BintjeStub::Create.fail_result(klass: InterventionRequest, values: BintjeStub::Create.default_values, result: OpenObject::BackendResponse.new(success: false, errors: [{faultCode: "FAILED !!!"}]))
+        BintjeStub::Create.fail_result(klass: Openstc::InterventionRequest, values: BintjeStub::Create.default_values, result: OpenObject::BackendResponse.new(success: false, errors: [{faultCode: "FAILED !!!"}]))
         send_set_request request_data
       end
 
@@ -123,14 +123,14 @@ describe "/api/openstc/intervention_requests/:id" do
     before(:each) do
       set_request
       BintjeStub::Read.success_result(
-          klass: InterventionRequest,
+          klass: Openstc::InterventionRequest,
           ids: [@intervention_request.id],
           fields: [],
           result: [{id: @intervention_request.id}])
     end
 
     it "read intervention request with :id" do
-      InterventionRequest.should_receive(:find_one)
+      Openstc::InterventionRequest.should_receive(:find_one)
       .with(@api_credential.open_object_context, @intervention_request.id.to_s)
       .and_return(OpenObject::BackendResponse.new(success: true, content: [@intervention_request]))
       send_set_request
@@ -157,7 +157,7 @@ describe "/api/openstc/intervention_requests/:id" do
     context "read fails" do
       before(:each) do
         BintjeStub::Read.fail_result(
-            klass: InterventionRequest,
+            klass: Openstc::InterventionRequest,
             ids: [@intervention_request.id],
             fields: [])
         send_set_request
@@ -181,11 +181,11 @@ describe "/api/openstc/intervention_requests/:id" do
 
     before(:each) {
       set_request
-      BintjeStub::Write.success_result(klass: InterventionRequest, ids: ["1"])
+      BintjeStub::Write.success_result(klass: Openstc::InterventionRequest, ids: ["1"])
     }
 
     it "updates InternventionRequest object by :id" do
-      InterventionRequest.should_receive(:write)
+      Openstc::InterventionRequest.should_receive(:write)
       .with(@api_credential.open_object_context, ["1"], BintjeStub::Write.default_values)
       .and_return(OpenObject::BackendResponse.new(success: true, content: BintjeStub::Write.default_result))
       send_set_request
@@ -195,7 +195,7 @@ describe "/api/openstc/intervention_requests/:id" do
 
       before(:each) do
         send_set_request
-        BintjeStub::Write.success_result(klass: InterventionRequest)
+        BintjeStub::Write.success_result(klass: Openstc::InterventionRequest)
       end
 
       it_behaves_like "any API request"
@@ -213,7 +213,7 @@ describe "/api/openstc/intervention_requests/:id" do
     context "Failure" do
 
       before(:each) do
-        BintjeStub::Write.fail_result(klass: InterventionRequest, ids: ["1"])
+        BintjeStub::Write.fail_result(klass: Openstc::InterventionRequest, ids: ["1"])
         send_set_request({intervention_request: {partner_id: 4}})
       end
 

@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :intervention_request do
+  factory :intervention_request, :class => Openstc::InterventionRequest  do
 =begin
     id
     create_uid
