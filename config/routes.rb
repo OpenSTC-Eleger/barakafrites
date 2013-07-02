@@ -10,6 +10,7 @@ Barakafrites::Application.routes.draw do
     namespace :openstc do
       resources :intervention_requests
       resources :sites
+      resources :teams
     end
 
     namespace :open_object do
