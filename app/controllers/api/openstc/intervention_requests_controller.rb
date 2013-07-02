@@ -6,7 +6,7 @@ class Api::Openstc::InterventionRequestsController < ApplicationController
   def index
     @filters = params[:filters] || []
     @fields = params[:fields] || []
-    @intervention_requests = InterventionRequest.find_all(user_context,@filters,@fields)
+    @intervention_requests = InterventionRequest.find_all(user_context,format_filters(@filters),@fields)
     backend_response_to_json @intervention_requests
   end
 
