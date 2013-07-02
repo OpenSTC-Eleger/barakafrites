@@ -24,7 +24,7 @@ module ApiController
   end
 
   def create
-    @resource = params[:site]
+    @resource = params[self.class.resource_param]
     @create = self.class.maping_model.create(user_context, @resource)
     backend_response_to_json @create
   end
@@ -35,7 +35,7 @@ module ApiController
   end
 
   def update
-    @attributes = params[:site]
+    @attributes = params[self.class.resource_param]
     @update = self.class.maping_model.write_one(user_context, params[:id], @attributes)
     backend_response_to_json @update
   end
@@ -50,6 +50,10 @@ module ApiController
 
     def maping_model=(klass)
       @maping_model = klass
+    end
+
+    def resource_param
+      @maping_model.name.split('::').last.underscore
     end
 
 
