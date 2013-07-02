@@ -1,6 +1,5 @@
 class Api::OpenObject::UsersController < ApplicationController
 
-
   before_filter :check_authenticated?
 
   def index
@@ -26,6 +25,5 @@ class Api::OpenObject::UsersController < ApplicationController
     @update = OpenObject::User.write_one(user_context, params[:id], @attributes)
     backend_response_to_json @update
   end
-
 
 end
