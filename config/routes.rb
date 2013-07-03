@@ -14,6 +14,7 @@ Barakafrites::Application.routes.draw do
       resources :departments
       resources :equipments
       resources :absence_categories
+      resources :task_categories
     end
 
     namespace :open_object do
