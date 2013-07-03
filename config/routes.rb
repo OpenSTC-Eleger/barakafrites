@@ -12,6 +12,7 @@ Barakafrites::Application.routes.draw do
       resources :sites
       resources :teams
       resources :departments
+      resources :equipments
     end
 
     namespace :open_object do
