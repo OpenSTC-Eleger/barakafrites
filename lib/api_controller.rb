@@ -4,8 +4,6 @@ module ApiController
     base.extend ClassMethods
   end
 
-
-
   def format_filters(params_filter)
     filters = if params_filter.size > 0
                 params_filter.map do |filter|
@@ -19,43 +17,40 @@ module ApiController
   def index
     @fields = params[:fields] || []
     @filters = params[:filters] || []
-    @collection = self.class.maping_model.find_all(user_context, format_filters(@filters), @fields)
+    @collection = self.class.resource_model.find_all(user_context, format_filters(@filters), @fields)
     backend_response_to_json @collection
   end
 
   def create
     @resource = params[self.class.resource_param]
-    @create = self.class.maping_model.create(user_context, @resource)
+    @create = self.class.resource_model.create(user_context, @resource)
     backend_response_to_json @create
   end
 
   def show
-    @resource = self.class.maping_model.find_one(user_context, params[:id], params[:fields])
+    @resource = self.class.resource_model.find_one(user_context, params[:id], params[:fields])
     backend_response_to_json @resource
   end
 
   def update
     @attributes = params[self.class.resource_param]
-    @update = self.class.maping_model.write_one(user_context, params[:id], @attributes)
+    @update = self.class.resource_model.write_one(user_context, params[:id], @attributes)
     backend_response_to_json @update
   end
 
-
-
   module ClassMethods
 
-    def maping_model
-      @maping_model
+    def resource_model
+      @resource_model
     end
 
-    def maping_model=(klass)
-      @maping_model = klass
+    def resource_model=(klass)
+      @resource_model = klass
     end
 
     def resource_param
-      @maping_model.name.split('::').last.underscore
+      @resource_model.name.split('::').last.underscore
     end
-
 
   end
 
