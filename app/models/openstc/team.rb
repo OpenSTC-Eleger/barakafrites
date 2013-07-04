@@ -7,3 +7,4 @@ class Openstc::Team
   attr_accessor *@@available_fields
 
 end
+
