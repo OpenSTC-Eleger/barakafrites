@@ -4,7 +4,7 @@ module OpenObjectModel
       include ActiveModel::Model
       include OpenObject
 
-      attr_accessor :href
+      attr_accessor :href, :id, :name
 
       def initialize(attributes = {})
         super
