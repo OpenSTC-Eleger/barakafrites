@@ -5,3 +5,4 @@
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
 Barakafrites::Application.config.secret_token = '560048a478123256e54c1da0c7b037e8e66b166d393dce00dacbdf831a3196e4758eb34d169bdd0a7868c44ca3705ac12c8dd8697cada212a93f94ce018c6039'
+Barakafrites::Application.config.secret_key_base = "560048a478123256e54c1da0c7b037e8e6"
