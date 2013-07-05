@@ -36,25 +36,17 @@ describe Openstc::Site do
   it { should respond_to(:complete_name) }
   it { should respond_to(:complete_name=) }
   describe 'complete_name' do
-    its(:complete_name) {should be_a String}
+    it 'should be a String'
   end
   it {should respond_to(:type)}
   it { should respond_to(:type=) }
   describe 'type' do
-    its(:type) {should be_an Hash}
+    it 'should be an Hash'
   end
   it {should respond_to(:id)}
   it {should respond_to(:id=)}
   describe 'id' do
-    its(:id) {should be_a Fixnum}
+    it'should be a Fixnum'
   end
 
-
 end
-
-=begin
-
-{"asksBelongsto": [], "service_ids": [2], "site_parent_id": false, "code": false, "name": "ATELIER MUNICIPAL", "intervention_ids": [], "lenght": 0, "surface": 1775, "width": 0, "complete_name": "ATELIER MUNICIPAL / Mairie", "long": 0.0, "lat": 0.0, "type": [14, "Mairie"], "id": 1}
-
-var fields = ["code", "complete_name", "id", "lenght", "name", "service", "service_ids", "site_parent_id", "surface", "type", "width"]
-=end
