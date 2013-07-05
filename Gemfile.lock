@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/Electron-libre/session_off.git
+  revision: 407fd1e978c1f5215ace9a6130291800c33920d3
+  specs:
+    session_off (0.4)
+      actionpack (>= 2.3)
+
 PATH
   remote: /home/cedric/Dev/Siclic/bintje
   specs:
@@ -113,8 +120,6 @@ GEM
       railties (>= 4.0.0.beta, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
-    session_off (0.4)
-      actionpack (>= 2.3)
     slop (3.4.5)
     sprockets (2.10.0)
       hike (~> 1.2)
@@ -154,6 +159,6 @@ DEPENDENCIES
   rails
   rspec-rails
   sass-rails
-  session_off
+  session_off!
   sqlite3
   uglifier

@@ -19,7 +19,7 @@ gem 'uglifier'
 gem 'rabl'
 
 # To disable rails sessions
-gem 'session_off'
+gem 'session_off', :git => "git://github.com/Electron-libre/session_off.git"
 
 # Wonderfull hashes
 gem 'hashie'
