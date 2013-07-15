@@ -27,7 +27,7 @@ gem 'bintje', :path => '/home/cedric/Dev/Siclic/bintje'
 
 # Test libraries
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~>2.14'
   gem 'factory_girl_rails'
   gem 'pry'
 end
