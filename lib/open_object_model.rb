@@ -1,10 +1,16 @@
 module OpenObjectModel
+
   def self.included(base)
+    base.extend ClassMethods
     base.class_eval do
       include ActiveModel::Model
       include OpenObject
 
       attr_accessor :href, :id, :name
+
+      class << self
+        alias_method_chain :read, :fields
+      end
 
       def initialize(attributes = {})
         super
@@ -12,7 +18,7 @@ module OpenObjectModel
       end
 
     end
-    base.extend ClassMethods
+
   end
 
 
@@ -66,6 +72,24 @@ module OpenObjectModel
       end
       create_response
     end
+
+
+    # Called in Alias Method Chain, see around line 12
+    # Set fields on Bintje's OpenObject.read
+    #
+    # @param [Hash] user_context
+    # @param [Array] ids
+    # @param [Array][Fixnum] fields If given fields are not referenced in model class, remove them. If empty replace with model's fields
+    # Then call the original read method with completed fields parameters
+    # @return [Array] Whatever OpenObject.read return
+    def read_with_fields(user_context,ids,fields)
+      available_fields = class_variable_get(:@@available_fields)
+      valid_fields = available_fields & fields
+      valid_fields.empty? && valid_fields = available_fields
+      Rails.logger.debug("Read with fields #{valid_fields}")
+      read_without_fields(user_context,ids,valid_fields)
+    end
+
 
 
   end
