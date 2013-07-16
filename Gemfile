@@ -23,7 +23,7 @@ gem 'hashie'
 gem 'sqlite3'
 gem 'jquery-rails'
 
-gem 'bintje', :path => '/home/cedric/Dev/Siclic/bintje'
+gem 'bintje', :git => 'git@dev.siclic.fr:bintje.git'
 
 # Test libraries
 group :development, :test do

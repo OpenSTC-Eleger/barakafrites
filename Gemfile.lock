@@ -5,11 +5,12 @@ GIT
     session_off (0.4)
       actionpack (>= 2.3)
 
-PATH
-  remote: /home/cedric/Dev/Siclic/bintje
+GIT
+  remote: git@dev.siclic.fr:bintje.git
+  revision: 4cb61753623beac6d66c40e889e4ca207e219c02
   specs:
-    bintje (0.2.0)
-      activesupport (>= 3.2.12)
+    bintje (0.3.0)
+      activesupport (>= 4.0.0)
 
 GEM
   remote: https://rubygems.org/
