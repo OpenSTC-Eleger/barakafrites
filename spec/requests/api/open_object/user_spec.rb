@@ -2,11 +2,16 @@ require 'spec_helper'
 require 'requests/requests_shared_examples'
 
 describe '/api/open_object/users' do
-  include RequestsSpecHelper
+#  include RequestsSpecHelper
 
-  before(:each) do
-    @uri = '/api/open_object/users'
-  end
+  let(:collection_uri) { '/api/open_object/users' }
+  let(:resource_class) { OpenObject::User }
+
+
+  it_behaves_like "any API"
+
+
+=begin
 
   describe 'GET' do
     before(:each) do
@@ -134,5 +139,6 @@ describe '/api/open_object/users/:id' do
 
   end
 
+=end
 
 end
