@@ -28,8 +28,9 @@ module OpenObjectModel
     # @param [Array] filters Array of Array containing ['fields','operator','value']
     # @param [Array] fields List of string of required fields names
     # @return [Array] Objects from the model
-    def find_all(user_context, filters = [], fields = [])
-      search_response = self.search(user_context, filters)
+    def find_all(user_context, filters , fields , *pagination_and_ordering)
+
+      search_response = self.search(user_context, filters, *pagination_and_ordering)
       ids = search_response.content
       result = []
       if search_response.success

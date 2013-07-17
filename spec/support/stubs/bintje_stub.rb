@@ -17,6 +17,7 @@ module BintjeStub
       klass.stub(:search).with(BintjeStub.user_context, args)
     end
 
+
     def self.success_result(klass: OpenObject, args: self.default_args, result: self.default_result)
       self.method_and_args(klass: klass, args: args)
       .and_return(OpenObject::BackendResponse.new(success: true, errors: nil, content: result))

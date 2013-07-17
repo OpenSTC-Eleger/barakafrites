@@ -71,6 +71,7 @@ module RequestsSharedExamples
           @data = {filters: filters_params, fields: ['name']}
         end
 
+
         context "success" do
           before(:each) do
             BintjeStub::Search.success_result klass: resource_class
@@ -88,6 +89,49 @@ module RequestsSharedExamples
 
           it_behaves_like "any failed API request"
         end
+
+        context "with offset: Fixnum parameter" do
+          before(:each) do
+            @data = {offset: 10}
+            resource_class.stub(:search).and_return(
+                OpenObject::BackendResponse.new( success: true, errors: nil, content: [])
+            )
+            send_set_request
+          end
+          it "calls Model.search with offset: Fixnum" do
+            expect(resource_class).to have_received(:search).with(BintjeStub.user_context, [], offset:10)
+          end
+
+        end
+
+
+        context "with limit: Fixnum parameter" do
+          before(:each) do
+            @data = {limit: 5}
+            resource_class.stub(:search).and_return(
+                OpenObject::BackendResponse.new( success: true, errors: nil, content: [])
+            )
+            send_set_request
+          end
+          it "calls Model.search with offset: Fixnum" do
+            expect(resource_class).to have_received(:search).with(BintjeStub.user_context, [], limit:5)
+          end
+
+        end
+
+        context "with offset: Fixnum parameter & limit: Fixnum" do
+          before(:each) do
+            @data = {offset: 10, limit: 5}
+            resource_class.stub(:search).and_return(
+                OpenObject::BackendResponse.new( success: true, errors: nil, content: [])
+            )
+            send_set_request
+          end
+          it "calls Model.search with offset: Fixnum" do
+            expect(resource_class).to have_received(:search).with(BintjeStub.user_context, [], offset:10, limit:5)
+          end
+        end
+
       end
 
       describe 'POST' do
