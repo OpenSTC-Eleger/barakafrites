@@ -132,6 +132,21 @@ module RequestsSharedExamples
           end
         end
 
+        context "with sort: String parameter" do
+          before(:each) do
+            @data = { sort: "name ASC"}
+            resource_class.stub(:search).and_return(
+                OpenObject::BackendResponse.new( success: true, errors: nil, content: [])
+            )
+            send_set_request
+          end
+
+          it "calls Model.search with order: String" do
+            expect(resource_class).to have_received(:search).with(BintjeStub.user_context, [], order: "name ASC")
+          end
+
+        end
+
       end
 
       describe 'POST' do

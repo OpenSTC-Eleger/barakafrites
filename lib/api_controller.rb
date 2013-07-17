@@ -15,16 +15,21 @@ module ApiController
   end
 
 
+
+
   def index
     @fields = params[:fields] || []
     @filters = params[:filters] || []
 
-    pagination_and_ordering = Array.new
+    pagination_and_sorting = Array.new
+
+    sorting = params[:sort]
     pagination = params.select {|k,v| %w(offset limit).include?(k) && !v.nil? }.inject({}) { |h,(k,v)| h[k.to_sym] =   v.to_i;h }
+    pagination_and_sorting << pagination unless pagination.empty?
+    pagination_and_sorting << {order: sorting} unless sorting.nil?
+    pagination_and_sorting = [ pagination_and_sorting.inject({}) {|h,el| h.merge!(el);h}] unless pagination_and_sorting.empty?
 
-    pagination_and_ordering << pagination unless pagination.empty?
-
-    @collection = self.class.resource_model.find_all(user_context, format_filters(@filters), @fields, *pagination_and_ordering)
+    @collection = self.class.resource_model.find_all(user_context, format_filters(@filters), @fields, *pagination_and_sorting)
     backend_response_to_json @collection
   end
 
