@@ -85,6 +85,7 @@ module OpenObjectModel
     # @return [Array] Whatever OpenObject.read return
     def read_with_fields(user_context,ids,fields)
       available_fields = class_variable_get(:@@available_fields)
+      fields.nil? && fields = available_fields
       valid_fields = available_fields & fields
       valid_fields.empty? && valid_fields = available_fields
       Rails.logger.debug("Read with fields #{valid_fields}")

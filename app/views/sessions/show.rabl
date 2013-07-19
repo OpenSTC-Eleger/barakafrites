@@ -1,4 +1,3 @@
-object @user
-attributes :login, :user_email, :firstname, :lastname, :context_lang
+node(:user) { @user }
 node(:token) {  @token }
 node(:menu) { @menu }
