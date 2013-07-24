@@ -30,7 +30,7 @@ Barakafrites::Application.routes.draw do
 
       resources :partners
       resources :partner_types
-
+      resources :partner_addresses
     end
 
   end
