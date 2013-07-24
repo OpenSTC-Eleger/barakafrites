@@ -8,8 +8,25 @@ class OpenObject::User
     attr_accessor field
   end
 
-  def self.authenticate(dbname,login,password)
-    OpenObject.login(dbname,login,password).content
+  def self.authenticate(dbname, login, password)
+    OpenObject.login(dbname, login, password).content
+  end
+
+
+  def manageable_officers(user_context)
+    OpenObject.rescue_xmlrpc_fault do
+      response = OpenObject::User.connection(user_context).execute(OpenObject::User.open_object_model, 'get_manageable_officers', self.id.to_i)
+      OpenObject::BackendResponse.new(success: true, content: response)
+    end
+
+
+  end
+
+  def manageable_teams(user_context)
+    OpenObject.rescue_xmlrpc_fault do
+      response = OpenObject::User.connection(user_context).execute(OpenObject::User.open_object_model, 'get_manageable_teams', self.id.to_i)
+      OpenObject::BackendResponse.new(success: true, content: response)
+    end
   end
 
 end

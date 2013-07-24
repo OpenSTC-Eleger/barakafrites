@@ -21,7 +21,13 @@ Barakafrites::Application.routes.draw do
     end
 
     namespace :open_object do
-      resources :users
+      resources :users do
+        member do
+          get 'manageable_officers'
+          get 'manageable_teams'
+        end
+
+      end
     end
 
   end
