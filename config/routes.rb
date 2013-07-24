@@ -26,8 +26,10 @@ Barakafrites::Application.routes.draw do
           get 'manageable_officers'
           get 'manageable_teams'
         end
-
       end
+
+      resources :partners
+
     end
 
   end
