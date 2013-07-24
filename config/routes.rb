@@ -29,6 +29,7 @@ Barakafrites::Application.routes.draw do
       end
 
       resources :partners
+      resources :partner_types
 
     end
 
