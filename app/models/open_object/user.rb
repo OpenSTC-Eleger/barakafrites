@@ -2,7 +2,7 @@ class OpenObject::User
   include OpenObjectModel
   set_open_object_model 'res.users'
 
-  @@available_fields = %w(id name href menu_id groups_id date context_tz context_lang complete_name firstname lastname service_id service_ids isDST isManager)
+  @@available_fields = %w(complete_name contact_id context_lang context_tz date firstname groups_id id isDST isManager lastname login name phone service_id service_ids tasks team_ids user_email)
 
   @@available_fields.each do |field|
     attr_accessor field
