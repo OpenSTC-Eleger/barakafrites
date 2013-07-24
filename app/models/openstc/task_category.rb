@@ -1,7 +1,9 @@
 class Openstc::TaskCategory
   include OpenObjectModel
 
-  @@available_fields = %w( id name href )
+  set_open_object_model 'openstc.task.category'
+
+  @@available_fields = %w(code complete_name id name parent_id service_ids)
   attr_accessor *@@available_fields
 
 end
