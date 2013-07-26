@@ -5,32 +5,41 @@ module ApiController
   end
 
   def format_filters(params_filter)
-    filters = if params_filter.size > 0
-                params_filter.map do |filter|
-                  [filter['field'], filter['operator'], filter['value']]
-                end
-              else
-                params_filter
-              end
+    filters = params_filter.map do |index, filter|
+      case filter.size
+        when 1
+          filter['condition']
+        when 3
+          filter.map { |k, v| v }
+        else
+          next
+      end
+    end
+
   end
 
 
-
-
   def index
+
     @fields = params[:fields] || []
-    @filters = params[:filters] || []
+    @filters = params[:filters] || {}
 
-    pagination_and_sorting = Array.new
+    if request.head?
+      @count = self.class.resource_model.count(user_context, format_filters(@filters)).content
+      head :ok, "Content-Range" => "#{self.class.resource_model.name} #{0}-#{0}/#{@count}"
+    else
 
-    sorting = params[:sort]
-    pagination = params.select {|k,v| %w(offset limit).include?(k) && !v.nil? }.inject({}) { |h,(k,v)| h[k.to_sym] =   v.to_i;h }
-    pagination_and_sorting << pagination unless pagination.empty?
-    pagination_and_sorting << {order: sorting} unless sorting.nil?
-    pagination_and_sorting = [ pagination_and_sorting.inject({}) {|h,el| h.merge!(el);h}] unless pagination_and_sorting.empty?
+      pagination_and_sorting = Array.new
 
-    @collection = self.class.resource_model.find_all(user_context, format_filters(@filters), @fields, *pagination_and_sorting)
-    backend_response_to_json @collection
+      sorting = params[:sort]
+      pagination = params.select { |k, v| %w(offset limit).include?(k) && !v.nil? }.inject({}) { |h, (k, v)| h[k.to_sym] = v.to_i; h }
+      pagination_and_sorting << pagination unless pagination.empty?
+      pagination_and_sorting << {order: sorting} unless sorting.nil?
+      pagination_and_sorting = [pagination_and_sorting.inject({}) { |h, el| h.merge!(el); h }] unless pagination_and_sorting.empty?
+
+      @collection = self.class.resource_model.find_all(user_context, format_filters(@filters), @fields, *pagination_and_sorting)
+      backend_response_to_json @collection
+    end
   end
 
   def create

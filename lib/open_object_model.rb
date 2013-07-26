@@ -50,6 +50,14 @@ module OpenObjectModel
       end
     end
 
+    def count(user_context,filters)
+      OpenObject.rescue_xmlrpc_fault do
+        count = self.connection(user_context).execute(open_object_model,'search_count',filters)
+        OpenObject::BackendResponse.new(success:true, content:count)
+      end
+
+    end
+
 
     # @return [Object] instance of the model or nil
     def find_one(user_context, id, fields = [])

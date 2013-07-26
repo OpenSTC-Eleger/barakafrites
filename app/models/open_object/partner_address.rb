@@ -7,3 +7,4 @@ class OpenObject::PartnerAddress
   attr_accessor *@@available_fields
 
 end
+

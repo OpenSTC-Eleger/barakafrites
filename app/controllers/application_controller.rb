@@ -31,6 +31,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_context
+    @user_context || check_authenticated?
     @user_context
   end
 
