@@ -32,6 +32,8 @@ group :development, :test do
   gem 'pry'
 end
 
+gem 'airbrake'
+
 gem 'protected_attributes'
 gem 'puma'
 
