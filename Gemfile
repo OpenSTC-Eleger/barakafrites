@@ -30,6 +30,7 @@ group :development, :test do
   gem 'rspec-rails', '~>2.14'
   gem 'factory_girl_rails'
   gem 'pry'
+  gem 'pry-debugger'
 end
 
 gem 'airbrake'
