@@ -3,5 +3,5 @@ Airbrake.configure do |config|
   config.host    = 'monitor.siclic.fr'
   config.port    = 3000
   #config.secure  = config.port == 443
-  config.development_environments = []
+  config.development_environments = ['test']
 end
