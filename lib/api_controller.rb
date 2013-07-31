@@ -5,10 +5,10 @@ module ApiController
   end
 
   # @param [the params hash] params_filter
-  # @return [Hash] params filtered and formated for the OpenObject request
+  # @return [Array] params filtered and formated for the OpenObject request
   def format_filters(params_filter)
-    raise ArgumentError.new('Filter parameters must be Hash') unless params_filter.kind_of?(Hash)
     if params_filter
+      raise ArgumentError.new('Filter parameters must be Hash') unless params_filter.kind_of?(Hash)
       filters = params_filter.map do |index, filter|
         case filter.size
           when 1
@@ -42,7 +42,6 @@ module ApiController
       pagination_and_sorting << pagination unless pagination.empty?
       pagination_and_sorting << {order: sorting} unless sorting.nil?
       pagination_and_sorting = [pagination_and_sorting.inject({}) { |h, el| h.merge!(el); h }] unless pagination_and_sorting.empty?
-
       @collection = self.class.resource_model.find_all(user_context, format_filters(@filters), @fields, *pagination_and_sorting)
       backend_response_to_json @collection
     end

@@ -44,6 +44,7 @@ module OpenObjectModel
         end
         result
         read_response.content = result
+        read_response.success = true
         return read_response
       else
         return search_response
