@@ -7,6 +7,7 @@ module ApiController
   # @param [the params hash] params_filter
   # @return [Hash] params filtered and formated for the OpenObject request
   def format_filters(params_filter)
+    raise ArgumentError.new('Filter parameters must be Hash') unless params_filter.kind_of?(Hash)
     if params_filter
       filters = params_filter.map do |index, filter|
         case filter.size
