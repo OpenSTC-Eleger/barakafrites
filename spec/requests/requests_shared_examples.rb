@@ -67,7 +67,8 @@ module RequestsSharedExamples
         before(:each) do
           @verb = 'get'
           create_api_credential
-          filters_params = BintjeStub::Search.default_args.map { |fs| {field: fs[0], operator: fs[1], value: fs[2]} }
+          defaults_values = BintjeStub::Search.default_args.map { |fs| {field: fs[0], operator: fs[1], value: fs[2]} }
+          filters_params = Hash[(0...defaults_values.size).zip defaults_values]
           @data = {filters: filters_params, fields: ['name']}
         end
 
@@ -180,7 +181,21 @@ module RequestsSharedExamples
 
       end
 
+
+      describe 'HEAD' do
+        before(:each) do
+          create_api_credential
+          @verb = 'head'
+        end
+        let(:contextual_response) { send_set_request}
+
+        it 'accepts head query' do
+          contextual_response
+        end
+      end
+
     end
+
 
     shared_examples_for "any API resource" do
       include RequestsSpecHelper

@@ -7,15 +7,19 @@ module ApiController
   # @param [the params hash] params_filter
   # @return [Hash] params filtered and formated for the OpenObject request
   def format_filters(params_filter)
-    filters = params_filter.map do |index, filter|
-      case filter.size
-        when 1
-          filter['condition']
-        when 3
-          filter.map { |k, v| v }
-        else
-          next
+    if params_filter
+      filters = params_filter.map do |index, filter|
+        case filter.size
+          when 1
+            filter['condition']
+          when 3
+            filter.map { |k, v| v if v }
+          else
+            next
+        end
       end
+    else
+      []
     end
   end
 
@@ -23,7 +27,7 @@ module ApiController
   def index
 
     @fields = params[:fields] || []
-    @filters = params[:filters] || {}
+    @filters = params[:filters]
 
     if request.head?
       @count = self.class.resource_model.count(user_context, format_filters(@filters)).content
