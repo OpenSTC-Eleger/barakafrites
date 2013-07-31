@@ -4,6 +4,8 @@ module ApiController
     base.extend ClassMethods
   end
 
+  # @param [the params hash] params_filter
+  # @return [Hash] params filtered and formated for the OpenObject request
   def format_filters(params_filter)
     filters = params_filter.map do |index, filter|
       case filter.size
@@ -15,7 +17,6 @@ module ApiController
           next
       end
     end
-
   end
 
 
