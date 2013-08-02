@@ -12,8 +12,8 @@ module ApiController
       filters = params_filter.map do |index, filter|
         case filter.size
           when 1
-            filter['condition']
-          when 3
+            filter
+	  when 3
             filter.map { |k, v| v if v }
           else
             next
