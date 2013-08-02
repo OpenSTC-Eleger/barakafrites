@@ -1,11 +1,7 @@
 Barakafrites::Application.routes.draw do
 
 
-  resources :sessions, :defaults => {:format => 'json'} do
-    member do
-      post :create
-    end
-  end
+  resources :sessions, :only => [:create, :destroy],:defaults => {:format => 'json'}
 
   namespace :api, :defaults => {:format => 'json'} do
     namespace :openstc do
