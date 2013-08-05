@@ -15,6 +15,7 @@ Barakafrites::Application.routes.draw do
       resources :interventions
       resources :intervention_categories
       resources :site_categories
+      resources :tasks
     end
 
     namespace :open_object do
