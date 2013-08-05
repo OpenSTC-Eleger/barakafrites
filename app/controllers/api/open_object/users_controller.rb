@@ -13,4 +13,10 @@ class Api::OpenObject::UsersController < Api::ResourceController
     backend_response_to_json  @user.manageable_teams(user_context)
   end
 
+  def scheduled_tasks
+    @filters = format_filters(params[:filters])
+    @user = OpenObject::User.new(id: params[:id])
+    backend_response_to_json @user.scheduled_tasks(user_context, @filters )
+  end
+
 end

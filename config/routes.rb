@@ -16,6 +16,7 @@ Barakafrites::Application.routes.draw do
       resources :intervention_categories
       resources :site_categories
       resources :tasks
+
     end
 
     namespace :open_object do
@@ -23,6 +24,7 @@ Barakafrites::Application.routes.draw do
         member do
           get 'manageable_officers'
           get 'manageable_teams'
+          get 'scheduled_tasks'
         end
       end
 

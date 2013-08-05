@@ -29,4 +29,11 @@ class OpenObject::User
     end
   end
 
+  def scheduled_tasks(user_context, filters)
+    OpenObject.rescue_xmlrpc_fault do
+      response = OpenObject::User.connection(user_context).execute(Openstc::Task.open_object_model, 'getUserTasksList', filters)
+      OpenObject::BackendResponse.new(success: true , content: response)
+    end
+  end
+
 end
