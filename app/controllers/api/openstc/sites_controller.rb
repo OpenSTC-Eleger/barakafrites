@@ -1,4 +1,4 @@
-class Api::Openstc::SitesController < ApplicationController
+class Api::Openstc::SitesController < Api::ResourceController
     include ApiController
 
     self.resource_model = (::Openstc::Site)
