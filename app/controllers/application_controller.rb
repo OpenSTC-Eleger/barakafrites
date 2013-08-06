@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 #  protect_from_forgery
   helper_method :current_user
   helper_method :user_context
-  session :off
+ # session :off
 
 
   def backend_response_to_json(bintje_response)
