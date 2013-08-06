@@ -31,6 +31,7 @@ Barakafrites::Application.routes.draw do
           get 'manageable_teams'
           get 'scheduled_tasks'
           get 'available_vehicles'
+          get 'available_equipments'
         end
       end
 

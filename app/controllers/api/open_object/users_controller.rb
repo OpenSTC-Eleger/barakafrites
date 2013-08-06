@@ -24,4 +24,9 @@ class Api::OpenObject::UsersController < Api::ResourceController
     backend_response_to_json @user.available_vehicles(user_context)
   end
 
+  def available_equipments
+    @user = OpenObject::User.new(:id => params[:id])
+    backend_response_to_json @user.available_equipments(user_context)
+  end
+
 end
