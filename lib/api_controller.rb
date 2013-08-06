@@ -64,6 +64,11 @@ module ApiController
     backend_response_to_json @update
   end
 
+  def destroy
+    @destroy = self.class.resource_model.unlink(user_context,params[:id])
+    backend_response_to_json @destroy
+  end
+
   module ClassMethods
 
     def resource_model
