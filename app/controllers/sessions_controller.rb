@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
   def destroy
     @api_credential = ApiCredential.where(access_token: params[:id]).last
     if @api_credential
-      if @api_crendetial.delete
+      if @api_credential.delete
         render :nothing => true,  :status => 200
       else
         render nothing: true, status: 400
