@@ -36,4 +36,11 @@ class OpenObject::User
     end
   end
 
+  def available_vehicles(user_context)
+    OpenObject.rescue_xmlrpc_fault do
+      response = Openstc::Task.connection(user_context).execute(Openstc::Task.open_object_model, 'get_vehicules_authorized', false)
+      BackendResponse.new(success: true, content: response)
+    end
+  end
+
 end

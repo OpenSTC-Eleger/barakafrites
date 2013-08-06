@@ -19,4 +19,9 @@ class Api::OpenObject::UsersController < Api::ResourceController
     backend_response_to_json @user.scheduled_tasks(user_context, @filters )
   end
 
+  def available_vehicles
+    @user = OpenObject::User.new(:id => params[:id])
+    backend_response_to_json @user.available_vehicles(user_context)
+  end
+
 end
