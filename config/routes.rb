@@ -18,6 +18,7 @@ Barakafrites::Application.routes.draw do
       resources :tasks do
         member do
           get 'available_vehicles'
+          get 'available_equipments'
         end
       end
 

@@ -14,5 +14,12 @@ class Openstc::Task
     end
   end
 
+  def available_equipments(user_context)
+    OpenObject.rescue_xmlrpc_fault do
+      response = self.class.connection(user_context).execute(self.class.open_object_model, 'get_materials_authorized', self.id)
+      BackendResponse.new(success: true, content: response)
+    end
+  end
+
 end
 
