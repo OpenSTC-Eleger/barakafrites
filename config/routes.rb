@@ -15,7 +15,11 @@ Barakafrites::Application.routes.draw do
       resources :interventions
       resources :intervention_categories
       resources :site_categories
-      resources :tasks
+      resources :tasks do
+        member do
+          get 'available_vehicles'
+        end
+      end
 
     end
 
