@@ -18,9 +18,9 @@ class SessionsController < ApplicationController
     @api_credential = ApiCredential.where(access_token: params[:id]).last
     if @api_credential
       if @api_credential.delete
-        render :nothing => true,  :status => 200
+        render :json => true,  :status => 200
       else
-        render nothing: true, status: 400
+        render :json => false, status: 400
       end
 
     else
