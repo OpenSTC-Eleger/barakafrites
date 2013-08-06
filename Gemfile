@@ -29,10 +29,9 @@ gem 'bintje', :git => 'git@dev.siclic.fr:bintje.git'
 group :development, :test do
   gem 'rspec-rails', '~>2.14'
   gem 'factory_girl_rails'
-  gem 'pry'
   gem 'pry-debugger'
 end
-
+gem 'pry'
 gem 'airbrake'
 
 gem 'protected_attributes'
