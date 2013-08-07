@@ -48,7 +48,7 @@ module ApiController
   end
 
   def create
-    @resource = params[self.class.resource_param]
+    @resource = params[self.class.resource_param].delete_if {|k,v| v.nil? }
     @create = self.class.resource_model.create(user_context, @resource)
     backend_response_to_json @create
   end
