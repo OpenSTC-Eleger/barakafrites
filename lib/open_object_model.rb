@@ -75,6 +75,10 @@ module OpenObjectModel
       self.write(user_context, [id.to_i], attributes)
     end
 
+    def unlink_one(user_context, id)
+      self.unlink(user_context, [id.to_i])
+    end
+
     def create_and_return(user_context, params)
       create_response = self.create(user_context, params)
       if create_response.success
