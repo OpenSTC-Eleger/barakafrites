@@ -21,6 +21,20 @@ module OpenObjectModel
 
   end
 
+  def self.arrange_by_order(pager_order, response)
+    if pager_order && pager_order.size == 1 && !pager_order.first[:order].blank?
+      field, order = pager_order.first[:order].split
+      sort = response.sort_by { |e| e.send(field.to_sym) }
+      if order == 'ASC'
+        sort
+      else
+        sort.reverse
+      end
+    else
+      response
+    end
+  end
+
 
   module ClassMethods
 
@@ -28,7 +42,7 @@ module OpenObjectModel
     # @param [Array] filters Array of Array containing ['fields','operator','value']
     # @param [Array] fields List of string of required fields names
     # @return [Array] Objects from the model
-    def find_all(user_context, filters , fields , *pagination_and_ordering)
+    def find_all(user_context, filters, fields, *pagination_and_ordering)
 
       search_response = self.search(user_context, filters, *pagination_and_ordering)
       ids = search_response.content
@@ -42,7 +56,7 @@ module OpenObjectModel
             result << self.new(e)
           end
         end
-        result
+        result = OpenObjectModel.arrange_by_order(pagination_and_ordering, result)
         read_response.content = result
         read_response.success = true
         return read_response
@@ -51,10 +65,10 @@ module OpenObjectModel
       end
     end
 
-    def count(user_context,filters)
+    def count(user_context, filters)
       OpenObject.rescue_xmlrpc_fault do
-        count = self.connection(user_context).execute(open_object_model,'search_count',filters)
-        OpenObject::BackendResponse.new(success:true, content:count)
+        count = self.connection(user_context).execute(open_object_model, 'search_count', filters)
+        OpenObject::BackendResponse.new(success: true, content: count)
       end
 
     end
@@ -96,15 +110,14 @@ module OpenObjectModel
     # @param [Array][Fixnum] fields If given fields are not referenced in model class, remove them. If empty replace with model's fields
     # Then call the original read method with completed fields parameters
     # @return [Array] Whatever OpenObject.read return
-    def read_with_fields(user_context,ids,fields)
+    def read_with_fields(user_context, ids, fields)
       available_fields = class_variable_get(:@@available_fields)
       fields.nil? && fields = available_fields
       valid_fields = available_fields & fields
       valid_fields.empty? && valid_fields = available_fields
       Rails.logger.debug("Read with fields #{valid_fields}")
-      read_without_fields(user_context,ids,valid_fields)
+      read_without_fields(user_context, ids, valid_fields)
     end
-
 
 
   end
