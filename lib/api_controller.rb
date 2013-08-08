@@ -24,6 +24,10 @@ module ApiController
     end
   end
 
+  def remove_nils(hash)
+    hash.delete_if {|k,v| v.nil? }
+  end
+
 
   def index
 
@@ -48,7 +52,7 @@ module ApiController
   end
 
   def create
-    @resource = params[self.class.resource_param].delete_if {|k,v| v.nil? }
+    @resource = remove_nils(params[self.class.resource_param])
     @create = self.class.resource_model.create(user_context, @resource)
     backend_response_to_json @create
   end
@@ -59,7 +63,7 @@ module ApiController
   end
 
   def update
-    @attributes = params[self.class.resource_param]
+    @attributes = remove_nils(params[self.class.resource_param])
     @update = self.class.resource_model.write_one(user_context, params[:id], @attributes)
     backend_response_to_json @update
   end
