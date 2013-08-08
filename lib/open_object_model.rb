@@ -21,6 +21,8 @@ module OpenObjectModel
 
   end
 
+  # Used as helper to sort response
+  # @return [Array] Contains ordered objects
   def self.arrange_by_order(pager_order, response)
     if pager_order && pager_order.size == 1 && !pager_order.first[:order].blank?
       field, order = pager_order.first[:order].split
@@ -65,6 +67,7 @@ module OpenObjectModel
       end
     end
 
+    # @return [OpenObject::BackendResponse] The number of records based on applied filters
     def count(user_context, filters)
       OpenObject.rescue_xmlrpc_fault do
         count = self.connection(user_context).execute(open_object_model, 'search_count', filters)
@@ -84,15 +87,26 @@ module OpenObjectModel
       read_response
     end
 
-
+    # Used to update one record
+    # @param [Hash] user_context
+    # @param [Fixnum] id
+    # @param [Hash] attributes
+    # @return [Boolean] true most of the time
     def write_one(user_context, id, attributes)
       self.write(user_context, [id.to_i], attributes)
     end
 
+    # Used to delete one record
+    # @param [Hash] user_context
+    # @param [Fixnum] id
+    # @return [Boolean] true always
     def unlink_one(user_context, id)
       self.unlink(user_context, [id.to_i])
     end
 
+    # @param [Hash] user_context
+    # @param [Hash] params
+    # @return [Object] Created empty object with id filled in
     def create_and_return(user_context, params)
       create_response = self.create(user_context, params)
       if create_response.success
