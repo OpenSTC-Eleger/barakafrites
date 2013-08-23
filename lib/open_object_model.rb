@@ -24,9 +24,15 @@ module OpenObjectModel
   # Used as helper to sort response
   # @return [Array] Contains ordered objects
   def self.arrange_by_order(pager_order, response)
-    if pager_order && pager_order.size == 1 && !pager_order.first[:order].blank?
+	  if pager_order && pager_order.size == 1 && !pager_order.first[:order].blank?
       field, order = pager_order.first[:order].split
-      sort = response.sort_by { |e| e.send(field.to_sym) }
+      sort = case response.first.send(field.to_sym)
+        when String
+          response.sort_by { |e| e.send(field.to_sym).downcase }
+        else
+          response.sort_by { |e| e.send(field.to_sym) }
+      end
+
       if order == 'ASC'
         sort
       else
