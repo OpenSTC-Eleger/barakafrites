@@ -9,7 +9,7 @@ class OpenObject::Menu
 
   def self.fetch(user_context,root_name = BarakafritesConfig.get[:root_menu])
     OpenObject.rescue_xmlrpc_fault do
-      response = OpenObject::Menu.connection(user_context).execute(OpenObject::Menu.open_object_model, 'get_menu_formatted')
+      response = OpenObject::User.connection(user_context).execute(OpenObject::User.open_object_model, 'get_menu_formatted')
       OpenObject::BackendResponse.new(success: true, content: response)
     end
   end
