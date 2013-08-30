@@ -8,8 +8,10 @@ class OpenObject::Menu
   @@available_fields.each { |field| attr_accessor field}
 
   def self.fetch(user_context,root_name = BarakafritesConfig.get[:root_menu])
-    root_id = self.search(user_context,[['name', '=',root_name]]).content.first
-    recursive_fetch(user_context,root_id)
+    OpenObject.rescue_xmlrpc_fault do
+      response = OpenObject::Menu.connection(user_context).execute(OpenObject::Menu.open_object_model, 'get_menu_formatted')
+      OpenObject::BackendResponse.new(success: true, content: response)
+    end
   end
 
 
