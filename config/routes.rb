@@ -21,6 +21,7 @@ Barakafrites::Application.routes.draw do
           get 'available_equipments'
         end
       end
+      resources :task_schedules
 
     end
 
