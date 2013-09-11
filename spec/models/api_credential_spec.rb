@@ -26,4 +26,17 @@ describe ApiCredential do
     end
   end
 
+  describe "process_expiration" do
+    it "destroy apicredential where created_at is greater than #{BarakafritesConfig.get["credendtial_expiration_hours"]}" do
+      FactoryGirl.create(:api_credential, {:created_at => Time.now - 24.hours})
+      ApiCredential.process_expiration
+      expect(ApiCredential.count).to eql 0
+    end
+    it "does not destroy where created_at is greater than #{BarakafritesConfig.get["credendtial_expiration_hours"]}" do
+      FactoryGirl.create(:api_credential, {:created_at => Time.now - 10.hours})
+      ApiCredential.process_expiration
+      expect(ApiCredential.count).to eql 1
+    end
+  end
+
 end
