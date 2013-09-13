@@ -10,6 +10,7 @@ Barakafrites::Application.routes.draw do
       resources :teams
       resources :departments
       resources :equipments
+      resources :equipment_categories
       resources :absence_categories
       resources :task_categories
       resources :interventions
