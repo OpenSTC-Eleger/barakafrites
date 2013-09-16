@@ -36,7 +36,7 @@ Barakafrites::Application.routes.draw do
           get 'available_equipments'
         end
       end
-
+      resources :groups
       resources :partners
       resources :partner_types
       resources :partner_addresses

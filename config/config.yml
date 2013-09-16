@@ -6,6 +6,7 @@ development:
     object: '/xmlrpc/object'
   root_menu: 'OpenSTM'
   credential_expiration_hours: 12
+
 test:
   open_object:
     host: 'octm-dev.siclic.fr'
@@ -14,7 +15,6 @@ test:
     object: '/xmlrpc/object'
   root_menu: 'OpenSTM'
   credential_expiration_hours: 12
-
 
 production:
   open_object:
