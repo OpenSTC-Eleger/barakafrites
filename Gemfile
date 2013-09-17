@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 gem 'rails', '~>4.0.0'
 
-gem 'sass-rails'
-gem 'coffee-rails'
+# gem 'sass-rails'
+# gem 'coffee-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 
 
-gem 'uglifier'
+# gem 'uglifier'
 
 
 # To format nice JSON and XML output
@@ -21,7 +21,7 @@ gem 'session_off', :git => "git://github.com/Electron-libre/session_off.git"
 gem 'hashie'
 
 gem 'sqlite3'
-gem 'jquery-rails'
+# gem 'jquery-rails'
 
 gem 'bintje', :git => 'git@dev.siclic.fr:bintje.git'
 
@@ -47,4 +47,4 @@ gem 'puma'
 # gem 'capistrano'
 
 # To use debugger
-gem 'debugger'
+# gem 'debugger'
