@@ -31,7 +31,30 @@ class Api::ResourceController < ApplicationController
     end
   end
 
+  def self.common_resource_get
+    Rails.application.routes.routes.select do |r|
+      /^\/api\//.match(r.path.spec.to_s) &&  (r.path.spec.to_s.include?(':id')) && /GET/.match(r.verb.to_s)
+    end.map do |r|
+      r.path.spec.to_s.gsub(/\(.*$/, '')
+    end
+  end
 
+  def self.common_resource_put
+    Rails.application.routes.routes.select do |r|
+      /^\/api\//.match(r.path.spec.to_s) &&  (r.path.spec.to_s.include?(':id')) && /PUT/.match(r.verb.to_s)
+    end.map do |r|
+      r.path.spec.to_s.gsub(/\(.*$/, '')
+    end
+  end
+
+
+  def self.common_resource_delete
+    Rails.application.routes.routes.select do |r|
+      /^\/api\//.match(r.path.spec.to_s) &&  (r.path.spec.to_s.include?(':id')) && /DELETE/.match(r.verb.to_s)
+    end.map do |r|
+      r.path.spec.to_s.gsub(/\(.*$/, '')
+    end
+  end
 
   api :GET, '/:path', 'List :resource'
   param :filters, Hash, :desc =>"Filters to be applied to collection" do
@@ -45,6 +68,7 @@ class Api::ResourceController < ApplicationController
   param 'limit', Integer, :desc => 'Paginate results by :limit'
   param 'offset', Integer, :desc => 'Paginate results from :offset'
   param 'sort', String, :desc => 'Sort results. Values can be "ASC" or "DES", followed by field name. ex : "ASC name" to sort by ascending name '
+  param 'fields', Array, :desc => 'list of fields fetched on response objects'
   @common_collection = self.common_collection_get
   description <<-EOS
   Apply to the following resources :
@@ -97,6 +121,38 @@ class Api::ResourceController < ApplicationController
 
   end
 
+  api :HEAD, '/:path', 'Get collection Metadata'
+  param :filters, Hash, :desc =>"Filters to be applied to collection" do
+    param 'n', Hash, :desc => "n is the Ordinal number, filters will be applied following the number order" do
+      param :field, String, :desc => 'Field or relation which apply filter'
+      param :operator, String, :desc => 'Operator ( >,<,=,like ...)'
+      param :value, String, :desc => 'Value that operator compare to field'
+    end
+    param 'n', String, :desc => 'Params Combinator, default is & ( logical and ), can be | ( logical or )'
+  end
+
+  description <<-EOS
+  Use HEAD against a collection URI to discover Meta Data, you can use filters to narow result
+  From now only the collection Size (count) and the Resource Name are available
+
+  === Example
+
+  ==== Request
+
+    Request URL: http://ostc-staging.siclic.fr/api/open_object/partners
+    Request Method: HEAD
+
+  ==== Response
+
+    Content-Range: OpenObject::Partner 0-0/433
+
+  Where 'OpenObject::Partner' is the resource name and '433' is the count
+
+  EOS
+  def common_collection_head
+
+  end
+
   api :POST, '/:path', 'Create :resource'
   param :resource_name, Hash, :desc => 'The resource name (singular) ex : for uri api/openstc/absence_categories it would be absence_category', :required => true do
     param 'attribute_name', String, :desc => 'an attribute ("attribute_name") value'
@@ -126,23 +182,121 @@ class Api::ResourceController < ApplicationController
     325
 
   EOS
-
   def common_collection_post
 
   end
 
   api :GET, '/:path/:id', 'Read :resource'
+  param 'fields', Array, desc: 'List of string to be fetched'
+  description <<-EOS
+  Access to resource identified by :id
+
+  This apply to the following URI :
+
+  *  #{self.common_resource_get.join("\n  *  ")}
+
+  === Example
+
+  ==== Request URI
+
+    Request URL:http://localhost/api/openstc/intervention_requests/325?fields%5B%5D=id&fields%5B%5D=name&fields%5B%5D=actions&fields%5B%5D=tooltip&fields%5B%5D=create_date&fields%5B%5D=create_uid&fields%5B%5D=date_deadline&fields%5B%5D=description&fields%5B%5D=manager_id&fields%5B%5D=note&fields%5B%5D=partner_address&fields%5B%5D=partner_id&fields%5B%5D=partner_phone&fields%5B%5D=partner_service_id&fields%5B%5D=partner_type&fields%5B%5D=partner_type_code&fields%5B%5D=people_name&fields%5B%5D=people_email&fields%5B%5D=people_phone&fields%5B%5D=refusal_reason&fields%5B%5D=service_id&fields%5B%5D=site1&fields%5B%5D=site_details&fields%5B%5D=state&fields%5B%5D=intervention_assignement_id&fields%5B%5D=has_equipment&fields%5B%5D=equipment_id&fields%5B%5D=is_citizen
+    Request Method:GET
+
+  ==== Request parsed query
+
+    fields[]:id
+    fields[]:name
+    fields[]:actions
+    fields[]:tooltip
+    fields[]:create_date
+    fields[]:create_uid
+    fields[]:date_deadline
+    fields[]:description
+    fields[]:manager_id
+    fields[]:note
+    fields[]:partner_address
+    fields[]:partner_id
+    fields[]:partner_phone
+    fields[]:partner_service_id
+    fields[]:partner_type
+    fields[]:partner_type_code
+    fields[]:people_name
+    fields[]:people_email
+    fields[]:people_phone
+    fields[]:refusal_reason
+    fields[]:service_id
+    fields[]:site1
+    fields[]:site_details
+    fields[]:state
+    fields[]:intervention_assignement_id
+    fields[]:has_equipment
+    fields[]:equipment_id
+    fields[]:is_citizen
+
+  ==== Result
+
+    {"partner_address":[883,"alavolee"],"create_uid":[2,"dst  ALAMICHEL"],"site_details":"Sur le bord de la route","create_date":"2013-09-26 14:55:39","name":"Pneu creuve","refusal_reason":false,"partner_service_id":false,"tooltip":"","equipment_id":[35,"308 sw / Véhicules"],"partner_type_code":false,"site1":[202,"Arnoult / ROND-POINT"],"has_equipment":true,"partner_type":false,"state":"wait","manager_id":[50,"false  STRULLU"],"people_name":false,"service_id":[8,"Garage"],"actions":["valid","refused"],"partner_id":[225,"3 AXES INDUSTRIES"],"id":325,"description":"Pneu explosé, pas de roue de secours.","href":"/openstc/intervention_requests/325","intervention_assignement_id":false,"note":false,"people_phone":false,"people_email":false,"date_deadline":false,"partner_phone":false}
+
+  EOS
   def common_resource_get
 
   end
 
   api :PATCH, '/:path/:id', 'Update :resource'
   api :PUT, '/:path/:id', 'Update :resource'
+  description <<-EOS
+  Update existing resource identified by :id.
+
+  PUT should be used to update the whole resource.
+  PATCH should be used to update only properties passed in request payload.
+
+  This apply to the following URIs :
+
+  *  #{self.common_resource_put.join("\n  *  ")}
+
+  === Example
+
+  This example use patch to update the intervention_request state
+
+  ==== Request
+
+    Request URL: http://ostc-staging.siclic.fr/api/openstc/intervention_requests/257
+    Request Method: PATCH
+
+  ==== Request Payload
+
+    {"state":"valid","intervention_assignement_id":3,"service_id":2,"date_deadline":"2013-10-04","description":"","create_task":false,"planned_hours":2,"category_id":""}
+
+  ==== Response
+
+    null
+
+  EOS
   def common_resource_put
 
   end
 
   api :DELETE, '/:path.:id', 'Delete :resource'
+  description <<-EOS
+
+  Delete resource identified by :id from collection.
+
+  This verb is available on the following URIs :
+
+  *  #{self.common_resource_delete.join("\n  *  ")}
+
+  === Example
+
+  ==== Request
+
+    Request URL: http://ostc-staging.siclic.fr/api/openstc/sites/7
+    Request Method: DELETE
+
+  ==== Result
+
+    null
+
+  EOS
   def common_resource_delete
 
   end
