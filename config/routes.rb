@@ -1,9 +1,10 @@
 Barakafrites::Application.routes.draw do
 
 
+  apipie
   resources :sessions, :only => [:create, :destroy],:defaults => {:format => 'json'}
 
-  namespace :api, :defaults => {:format => 'json'} do
+  namespace :api, :defaults => {:format => 'json'},except: [:new,:edit] do
     namespace :openstc do
       resources :intervention_requests
       resources :sites

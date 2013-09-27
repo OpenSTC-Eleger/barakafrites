@@ -1,5 +1,5 @@
 class Api::OpenObject::GroupsController < Api::ResourceController
-  include ApiController
+  include Api::ApiControllerModule
 
   self.resource_model = (::OpenObject::Group )
 

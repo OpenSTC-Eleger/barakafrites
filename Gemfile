@@ -33,7 +33,7 @@ group :development, :test do
 end
 gem 'pry'
 gem 'airbrake'
-
+gem 'apipie-rails'
 gem 'protected_attributes'
 gem 'puma'
 

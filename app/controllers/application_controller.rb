@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-  require 'api_controller'
-  include ApiController
+ # require 'api_controller'
+#  include Api::ApiControllerModule
 #  protect_from_forgery
   helper_method :current_user
   helper_method :user_context

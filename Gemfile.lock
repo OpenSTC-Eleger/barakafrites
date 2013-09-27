@@ -43,6 +43,8 @@ GEM
       activesupport
       builder
       json
+    apipie-rails (0.0.23)
+      rails (>= 3.0.10)
     arel (4.0.0)
     atomic (1.1.12)
     builder (3.1.4)
@@ -139,8 +141,8 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake
+  apipie-rails
   bintje!
-  debugger
   factory_girl_rails
   hashie
   protected_attributes

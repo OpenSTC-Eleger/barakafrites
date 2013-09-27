@@ -1,5 +1,5 @@
 class Api::Openstc::TeamsController < Api::ResourceController
-  include ApiController
+  include Api::ApiControllerModule
   self.resource_model=(::Openstc::Team)
 
 
