@@ -3,7 +3,7 @@ class Openstc::Task
 
   set_open_object_model 'project.task'
 
-  @@available_fields = %w(href site1 actions absent_type_id category_id date_end date_start effective_hours equipment_ids id km name oil_price oil_qtity planned_hours project_id inter_desc remaining_hours state team_id total_hours user_id equipment_names)
+  @@available_fields = %w(href site1 actions absent_type_id category_id date_end date_start effective_hours equipment_ids id km name oil_price oil_qtity planned_hours project_id inter_desc remaining_hours state team_id total_hours user_id equipment_names inter_equipment)
   attr_accessor *@@available_fields
 
 
