@@ -43,6 +43,12 @@ Barakafrites::Application.routes.draw do
       resources :partner_addresses
     end
 
+    namespace :openresa do
+      resources :bookings
+      resources :booking_lines
+      resources :bookables
+    end
+
   end
 
 
