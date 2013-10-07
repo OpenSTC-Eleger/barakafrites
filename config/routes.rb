@@ -1,15 +1,17 @@
 Barakafrites::Application.routes.draw do
 
 
+  apipie
   resources :sessions, :only => [:create, :destroy],:defaults => {:format => 'json'}
 
-  namespace :api, :defaults => {:format => 'json'} do
+  namespace :api, :defaults => {:format => 'json'},except: [:new,:edit] do
     namespace :openstc do
       resources :intervention_requests
       resources :sites
       resources :teams
       resources :departments
       resources :equipments
+      resources :equipment_categories
       resources :absence_categories
       resources :task_categories
       resources :interventions
@@ -21,6 +23,7 @@ Barakafrites::Application.routes.draw do
           get 'available_equipments'
         end
       end
+      resources :task_schedules
 
     end
 
@@ -34,10 +37,16 @@ Barakafrites::Application.routes.draw do
           get 'available_equipments'
         end
       end
-
+      resources :groups
       resources :partners
       resources :partner_types
       resources :partner_addresses
+    end
+
+    namespace :openresa do
+      resources :bookings
+      resources :booking_lines
+      resources :bookables
     end
 
   end

@@ -1,5 +1,5 @@
 class Api::Openstc::TaskCategoriesController < Api::ResourceController
-  include ApiController
+  include Api::ApiControllerModule
 
   self.resource_model = ::Openstc::TaskCategory
 

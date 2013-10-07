@@ -5,6 +5,7 @@ development:
     common: '/xmlrpc/common'
     object: '/xmlrpc/object'
   root_menu: 'OpenSTM'
+  credential_expiration_hours: 12
 
 test:
   open_object:
@@ -13,7 +14,7 @@ test:
     common: '/xmlrpc/common'
     object: '/xmlrpc/object'
   root_menu: 'OpenSTM'
-
+  credential_expiration_hours: 12
 
 production:
   open_object:
@@ -22,3 +23,4 @@ production:
     common: '/xmlrpc/common'
     object: '/xmlrpc/object'
   root_menu: 'OpenSTM'
+  credential_expiration_hours: 12

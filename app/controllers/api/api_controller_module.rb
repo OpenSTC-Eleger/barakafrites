@@ -1,8 +1,9 @@
-module ApiController
+module Api::ApiControllerModule
 
   def self.included(base)
     base.extend ClassMethods
   end
+  extend Apipie::DSL::Concern
 
   # @param [the params hash] params_filter
   # @return [Array] params filtered and formated for the OpenObject request
@@ -29,6 +30,8 @@ module ApiController
   end
 
 
+
+  api :GET, '/:controller_path', 'List :resource_id'
   def index
 
     @fields = params[:fields] || []
@@ -51,6 +54,7 @@ module ApiController
     end
   end
 
+  api :POST, '/:controller_path', 'Creates :resource_id'
   def create
     @resource = remove_nils(params[self.class.resource_param])
     @create = self.class.resource_model.create(user_context, @resource)

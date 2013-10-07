@@ -1,5 +1,5 @@
 class Api::Openstc::InterventionRequestsController < Api::ResourceController
-  include ApiController
+  include Api::ApiControllerModule
 
   self.resource_model = ::Openstc::InterventionRequest
 
