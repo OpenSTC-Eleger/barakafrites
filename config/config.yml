@@ -1,6 +1,6 @@
 development:
   open_object:
-    host: 'octm-dev.siclic.fr'
+    host: 'localhost'
     port: '8069'
     common: '/xmlrpc/common'
     object: '/xmlrpc/object'
@@ -9,7 +9,7 @@ development:
 
 test:
   open_object:
-    host: 'octm-dev.siclic.fr'
+    host: 'localhost'
     port: '8069'
     common: '/xmlrpc/common'
     object: '/xmlrpc/object'
@@ -18,7 +18,7 @@ test:
 
 production:
   open_object:
-    host: 'octm-dev.siclic.fr'
+    host: 'localhost'
     port: '8069'
     common: '/xmlrpc/common'
     object: '/xmlrpc/object'

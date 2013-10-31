@@ -23,7 +23,8 @@ gem 'hashie'
 gem 'sqlite3'
 # gem 'jquery-rails'
 
-gem 'bintje', :git => 'git@dev.siclic.fr:bintje.git'
+#gem 'bintje', :git => 'git@dev.siclic.fr:bintje.git'
+gem 'bintje', :git => '/media/DATA/developpement/git-openstc/bintje'
 
 # Test libraries
 group :development, :test do

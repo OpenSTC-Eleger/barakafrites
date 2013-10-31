@@ -1,16 +1,16 @@
 GIT
+  remote: /media/DATA/developpement/git-openstc/bintje
+  revision: bdab36ba0aaef0733c0ab2a54b3aa1dbe384319f
+  specs:
+    bintje (0.4.0)
+      activesupport (>= 4.0.0)
+
+GIT
   remote: git://github.com/Electron-libre/session_off.git
   revision: 407fd1e978c1f5215ace9a6130291800c33920d3
   specs:
     session_off (0.4)
       actionpack (>= 2.3)
-
-GIT
-  remote: git@dev.siclic.fr:bintje.git
-  revision: bdab36ba0aaef0733c0ab2a54b3aa1dbe384319f
-  specs:
-    bintje (0.4.0)
-      activesupport (>= 4.0.0)
 
 GEM
   remote: https://rubygems.org/
