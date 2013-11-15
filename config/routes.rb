@@ -38,7 +38,13 @@ Barakafrites::Application.routes.draw do
         end
       end
       resources :groups
-      resources :partners
+      resources :partners do
+        member do
+          get 'get_bookables'
+          get 'get_bookables_pricing'
+        end
+      end
+
       resources :partner_types
       resources :partner_addresses
     end
@@ -46,8 +52,12 @@ Barakafrites::Application.routes.draw do
     namespace :openresa do
       resources :bookings
       resources :booking_lines
-      resources :bookables
       resources :booking_recurrences
+      resources :bookables do
+        member do
+          get 'available_quantity'
+        end
+      end
     end
 
   end
