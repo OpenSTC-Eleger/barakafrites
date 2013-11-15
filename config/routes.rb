@@ -47,6 +47,7 @@ Barakafrites::Application.routes.draw do
       resources :bookings
       resources :booking_lines
       resources :bookables
+      resources :booking_recurrences
     end
 
   end
