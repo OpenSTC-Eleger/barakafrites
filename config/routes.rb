@@ -53,9 +53,11 @@ Barakafrites::Application.routes.draw do
       resources :bookings
       resources :booking_lines
       resources :booking_recurrences
+      get 'recurrence', to: 'booking_recurrences#get_dates'
       resources :bookables do
         member do
           get 'available_quantity'
+          get 'update_available_quantity'
         end
       end
     end

@@ -12,6 +12,13 @@ class Openresa::Bookable
     end
   end
 
+  def update_available_quantity(user_context, new_quantity)
+    OpenObject.rescue_xmlrpc_fault do
+      response = Openresa::Bookable.connection(user_context).execute(Openresa::Bookable.open_object_model, 'openbase_change_stock_qty', self.id.to_i, new_quantity)
+      OpenObject::BackendResponse.new(success: true, content: response)
+    end
+  end
+
 	# @param [Object] user_context
 	# @param [Array] filters Array of Array containing ['fields','operator','value']
 	# @param [Array] fields List of string of required fields names
