@@ -2,7 +2,7 @@ class Openresa::BookingRecurrence
   include OpenObjectModel
   set_open_object_model 'openresa.reservation.recurrence'
 
-  @@available_fields = %w( id name actions href recur_periodicity recur_week_monday recur_week_tuesday recr_week_wednesday recur_week_thursday recur_week_friday recur_week_saturday recur_week_sunday recur_month_type recur_month_absolute recur_month_relative_weight recur_month_relative_day recur_type date_start recur_length_type date_end recur_occurrence_nb date_confirm recurrence_state actions reservation_ids)  
+  @@available_fields = %w( id name actions href recur_periodicity recur_week_monday recur_week_tuesday recur_week_wednesday recur_week_thursday recur_week_friday recur_week_saturday recur_week_sunday recur_month_type recur_month_absolute recur_month_relative_weight recur_month_relative_day recur_type date_start recur_length_type date_end recur_occurrence_nb date_confirm recurrence_state actions state_event reservation_ids)  
 
   attr_accessor *@@available_fields
 
