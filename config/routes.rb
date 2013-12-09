@@ -60,6 +60,9 @@ Barakafrites::Application.routes.draw do
           get 'update_available_quantity'
         end
       end
+      resources :partners , controller: 'open_object/partners' do
+        resources :bookables, only: [:index]
+      end
     end
 
   end

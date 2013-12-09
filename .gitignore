@@ -17,3 +17,5 @@
 # Ignore IDE settings
 .idea
 *.iml
+
+doc
