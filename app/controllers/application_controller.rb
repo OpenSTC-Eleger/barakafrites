@@ -1,20 +1,20 @@
 class ApplicationController < ActionController::Base
- # require 'api_controller'
-#  include Api::ApiControllerModule
-#  protect_from_forgery
+  # require 'api_controller'
+  #  include Api::ApiControllerModule
+  #  protect_from_forgery
   helper_method :current_user
   helper_method :user_context
- # session :off
+  # session :off
 
 
   def backend_response_to_json(bintje_response)
     if bintje_response.success
       respond_to do |format|
-        format.json {render :json => bintje_response.content}
+        format.json { render :json => bintje_response.content }
       end
     else
       respond_to do |format|
-        format.json {render :json => bintje_response.errors, :status => 400}
+        format.json { render :json => bintje_response.errors, :status => 400 }
       end
     end
   end
@@ -40,11 +40,19 @@ class ApplicationController < ActionController::Base
   end
 
   def check_authenticated?
-    authenticate_or_request_with_http_token do |token,options|
-      if @api_credential = ApiCredential.where(access_token:token).last
+    if params['token']
+      if @api_credential = ApiCredential.where(access_token: params['token']).last
         set_user_context(@api_credential)
       else
         false
+      end
+    else
+      authenticate_or_request_with_http_token do |token, options|
+        if @api_credential = ApiCredential.where(access_token: token).last
+          set_user_context(@api_credential)
+        else
+          false
+        end
       end
     end
   end
