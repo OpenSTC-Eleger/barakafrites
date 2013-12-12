@@ -1,6 +1,6 @@
 development:
   open_object:
-    host: 'ostc-dev.siclic.fr'
+    host: 'localhost'
     port: '8069'
     common: '/xmlrpc/common'
     object: '/xmlrpc/object'
