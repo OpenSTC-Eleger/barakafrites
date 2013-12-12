@@ -47,6 +47,7 @@ Barakafrites::Application.routes.draw do
 
       resources :partner_types
       resources :partner_addresses
+      resources :portable_documents
     end
 
     namespace :openresa do
