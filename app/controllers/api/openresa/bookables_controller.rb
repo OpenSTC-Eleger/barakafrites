@@ -14,6 +14,12 @@ class Api::Openresa::BookablesController < Api::ResourceController
     backend_response_to_json  @bookable.update_available_quantity(user_context, params[:new_quantity])
   end
 
-
+  def index
+    if params[:partner_id]
+      params[:filters] || params[:filters] = {}
+      params[:filters][partner_id: params[:partner_id]]
+    end
+    super
+  end
 
 end

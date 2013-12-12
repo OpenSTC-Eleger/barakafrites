@@ -47,6 +47,7 @@ Barakafrites::Application.routes.draw do
 
       resources :partner_types
       resources :partner_addresses
+      resources :portable_documents
     end
 
     namespace :openresa do
@@ -59,6 +60,9 @@ Barakafrites::Application.routes.draw do
           get 'available_quantity'
           get 'update_available_quantity'
         end
+      end
+      resources :partners , controller: 'open_object/partners' do
+        resources :bookables, only: [:index]
       end
     end
 
