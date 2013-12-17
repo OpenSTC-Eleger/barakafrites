@@ -2,7 +2,7 @@ class Openresa::Bookable
   include OpenObjectModel
   set_open_object_model 'product.product'
 
-  @@available_fields = %w( id name href product_image type_prod color qty_available categ_id)
+  @@available_fields = %w( id name href product_image type_prod color qty_available categ_id block_booking)
   attr_accessor *@@available_fields
 
   def available_quantity(user_context, checkin, checkout)
