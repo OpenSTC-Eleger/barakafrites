@@ -7,4 +7,11 @@ class Openresa::Booking
 
   attr_accessor *@@available_fields
 
+  def self.printable_planning_for(user_context, ids, start_date, end_date)
+    OpenObject.rescue_xmlrpc_fault do
+      response = self.connection(user_context).execute(self.open_object_model, 'generate_html_plannings_for', ids, start_date, end_date)
+      OpenObject::BackendResponse.new(success: true, content: response)
+    end
+  end
+
 end
