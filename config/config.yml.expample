@@ -1,0 +1,26 @@
+development:
+  open_object:
+    host: 'localhost'
+    port: '8069'
+    common: '/xmlrpc/common'
+    object: '/xmlrpc/object'
+  root_menu: 'OpenSTC'
+  credential_expiration_hours: 12
+
+test:
+  open_object:
+    host: 'localhost'
+    port: '8069'
+    common: '/xmlrpc/common'
+    object: '/xmlrpc/object'
+  root_menu: 'OpenSTM'
+  credential_expiration_hours: 12
+
+production:
+  open_object:
+    host: 'localhost'
+    port: '8069'
+    common: '/xmlrpc/common'
+    object: '/xmlrpc/object'
+  root_menu: 'OpenSTM'
+  credential_expiration_hours: 12

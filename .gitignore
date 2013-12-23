@@ -18,4 +18,9 @@
 .idea
 *.iml
 
+# Generated documentation
 doc
+
+# Config file
+config/config.yaml
+
