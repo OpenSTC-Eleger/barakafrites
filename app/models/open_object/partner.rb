@@ -9,7 +9,7 @@ class OpenObject::Partner
   def get_bookables(user_context)
   	
     OpenObject.rescue_xmlrpc_fault do
-      response = Openresa::Bookable.connection(user_context).execute(Openresa::Bookable.open_object_model, 'get_bookables', false, self.id.to_i)
+      response = Openresa::Bookable.connection(user_context).execute(Openresa::Bookable.open_object_model, 'get_bookables', self.id.to_i)
       OpenObject::BackendResponse.new(success: true, content: response)
     end
   end
