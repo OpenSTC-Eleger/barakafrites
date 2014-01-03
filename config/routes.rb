@@ -51,7 +51,11 @@ Barakafrites::Application.routes.draw do
     end
 
     namespace :openresa do
-      resources :bookings
+      resources :bookings do
+        collection do
+          get 'print_planning', formats: 'html'
+        end
+      end
       resources :booking_lines
       resources :booking_recurrences
       get 'recurrence', to: 'booking_recurrences#get_dates'
