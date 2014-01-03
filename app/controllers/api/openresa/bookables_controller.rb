@@ -17,7 +17,7 @@ class Api::Openresa::BookablesController < Api::ResourceController
   def index
     if params[:partner_id]
       params[:filters] || params[:filters] = {}
-      params[:filters][partner_id: params[:partner_id]]
+      params[:filters]['partner_id'] = {field: 'partner_id',operator: '=',value:  params[:partner_id]}
     end
     super
   end

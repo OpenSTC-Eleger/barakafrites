@@ -19,15 +19,21 @@ class Openresa::Bookable
     end
   end
 
-	# @param [Object] user_context
-	# @param [Array] filters Array of Array containing ['fields','operator','value']
-	# @param [Array] fields List of string of required fields names
-	# @return [Array] Objects from the model
-	# @note : overide of classMethod find_all to add custom filters
-	def self.find_all(user_context, filters, fields, *pagination_and_ordering)
-    partner_id = filters.delete(:partner_id)
+  # @param [Object] user_context
+  # @param [Array] filters Array of Array containing ['fields','operator','value']
+  # @param [Array] fields List of string of required fields names
+  # @return [Array] Objects from the model
+  # @note : overide of classMethod find_all to add custom filters
+
+  def self.find_all(user_context, filters, fields, *pagination_and_ordering)
+    if partner_domain = filters.select { |e| e.first == 'partner_id' }.flatten
+    filters.delete(partner_domain)
+
+    partner_id = partner_domain.last.to_i
+
     partner_id ||= false
     new_filters = filters
+    end
 
     OpenObject.rescue_xmlrpc_fault do
       response = Openresa::Bookable.connection(user_context).execute(Openresa::Bookable.open_object_model, 'get_bookables', partner_id)

@@ -1,0 +1,42 @@
+diff --git a/app/controllers/api/openresa/bookables_controller.rb b/app/controllers/api/openresa/bookables_controller
+index 1350796..2f4cf82 100644
+--- a/app/controllers/api/openresa/bookables_controller.rb
++++ b/app/controllers/api/openresa/bookables_controller.rb
+@@ -17,9 +17,9 @@ class Api::Openresa::BookablesController < Api::ResourceController
+   def index
+     if params[:partner_id]
+       params[:filters] || params[:filters] = {}
+-      params[:filters][partner_id: params[:partner_id]]
++      params[:filters]['partner_id'] = {field: 'partner_id',operator: '=',value:  params[:partner_id]}
+     end
+     super
+   end
+ 
+-end
+\ No newline at end of file
++end
+diff --git a/app/models/openresa/bookable.rb b/app/models/openresa/bookable.rb
+index 0488b57..41a67d1 100644
+--- a/app/models/openresa/bookable.rb
++++ b/app/models/openresa/bookable.rb
+@@ -24,13 +24,16 @@ class Openresa::Bookable
+        # @param [Array] fields List of string of required fields names
+        # @return [Array] Objects from the model
+        # @note : overide of classMethod find_all to add custom filters
+-       def self.find_all(user_context, filters, fields, *pagination_and_ordering)
+-    partner_id = filters.delete(:partner_id)
++  def self.find_all(user_context, filters, fields, *pagination_and_ordering)
++    partner_domain = filters.select { |e| e.first == 'partner_id' }.flatten
++    filters.delete(partner_domain)
++    
++    partner_id = partner_domain.last
+     partner_id ||= false
+     new_filters = filters
+ 
+     OpenObject.rescue_xmlrpc_fault do
+-      response = Openresa::Bookable.connection(user_context).execute(Openresa::Bookable.open_object_model, 'get_book
++      response = Openresa::Bookable.connection(user_context).execute(Openresa::Bookable.open_object_model, 'get_book
+       OpenObject::BackendResponse.new(success: true, content: response)
+       new_filters.push(['id','in',response])
+     end
+
