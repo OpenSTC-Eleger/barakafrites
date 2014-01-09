@@ -149,6 +149,23 @@ module OpenObjectModel
     end
 
 
+    # @return [OpenObject::BackendResponse] 
+    def fields(user_context, fields)
+      OpenObject.rescue_xmlrpc_fault do
+	print "GET FIELDS*****************"
+        fields = self.connection(user_context).execute(open_object_model, 'fields_get', fields)
+	fields.each{|i| puts "i=#{i}" }
+	#hash.keys.sort.each do |key|
+	#  puts "#{key}-----"
+	#  hash[key].each { |val| puts val }
+	#end
+	print "fields *********  #{fields}"
+        OpenObject::BackendResponse.new(success: true, content: fields)
+      end
+
+    end
+
+
   end
 
 
