@@ -38,8 +38,10 @@ module Api::ApiControllerModule
     @filters = params[:filters]
 
     if request.head?
-      @count = self.class.resource_model.count(user_context, format_filters(@filters)).content
-      @myFields = self.class.resource_model.fields(user_context, @fields).content
+      #@count = self.class.resource_model.count(user_context, format_filters(@filters)).content
+      #@myFields = self.class.resource_model.fields(user_context, @fields).content
+      @metadata = self.class.resource_model.get_metadata(user_context, @fields).content
+      @count = @metadata["filter"]
       head :ok, "Content-Range" => "#{self.class.resource_model.name} #{0}-#{0}/#{@count}"
     else
 

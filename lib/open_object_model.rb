@@ -150,20 +150,36 @@ module OpenObjectModel
 
 
     # @return [OpenObject::BackendResponse] 
-    def fields(user_context, fields)
+    def fields(user_context, fields, metadata)
       OpenObject.rescue_xmlrpc_fault do
 	print "GET FIELDS*****************"
-        fields = self.connection(user_context).execute(open_object_model, 'fields_get', fields)
-	fields.each{|i| puts "i=#{i}" }
-	#hash.keys.sort.each do |key|
-	#  puts "#{key}-----"
-	#  hash[key].each { |val| puts val }
-	#end
-	print "fields *********  #{fields}"
+        #fields = self.connection(user_context).execute(open_object_model, 'fields_get', fields)
+	if metadata.has_key?("fields")
+	  fields = metadata.fetch('fields')
+	  fields.slice(fields)
+	  fields.each do |field,value|
+	    if value.has_key?('type')
+	      value.keep_if {|k,v| k=="type"}
+	    end
+	  end
+	end
+	print fields
         OpenObject::BackendResponse.new(success: true, content: fields)
       end
 
     end
+
+    def get_metadata(user_context, fields)
+      OpenObject.rescue_xmlrpc_fault do
+        print "GET METADATA*****************"
+        #fields = self.connection(user_context).execute(open_object_model, 'fields_get', fields)
+        metadata = self.connection(user_context).execute(open_object_model, 'getModelMetadata')
+	metadata["filter"] = self.fields(user_context,metadata,fields)	
+        OpenObject::BackendResponse.new(success: true, content: metadata)
+      end
+
+    end
+
 
 
   end
