@@ -149,35 +149,36 @@ module OpenObjectModel
     end
 
 
-    # @return [OpenObject::BackendResponse] 
-    def fields(user_context, fields, metadata)
-      OpenObject.rescue_xmlrpc_fault do
-	print "GET FIELDS*****************"
-        #fields = self.connection(user_context).execute(open_object_model, 'fields_get', fields)
+    # Keeps only fields and their types 
+    #  
+    # @param [Hash] metadata
+    # @return [Hash] fields list
+    def fields(metadata)
 	if metadata.has_key?("fields")
-	  fields = metadata.fetch('fields')
-	  fields.slice(fields)
-	  fields.each do |field,value|
+	  fields = metadata.clone.fetch('fields')
+	  fields_to_keep = class_variable_get(:@@available_fields)
+	  computed_fields = fields.select { |k,v|  fields_to_keep.include?(k) }
+	  computed_fields.each do |field,value|
 	    if value.has_key?('type')
 	      value.keep_if {|k,v| k=="type"}
 	    end
 	  end
+	else
+	  computed_fields = Hash.new
 	end
-	print fields
-        OpenObject::BackendResponse.new(success: true, content: fields)
-      end
-
+	return computed_fields
     end
-
-    def get_metadata(user_context, fields)
+    
+    # Called in main controller to build HTTP head response with metadata 
+    #  
+    # @param [Hash] user_context
+    # @return [Hash] metadata : model fields list and count rows in collection
+    def get_metadata(user_context)
       OpenObject.rescue_xmlrpc_fault do
-        print "GET METADATA*****************"
-        #fields = self.connection(user_context).execute(open_object_model, 'fields_get', fields)
         metadata = self.connection(user_context).execute(open_object_model, 'getModelMetadata')
-	metadata["filter"] = self.fields(user_context,metadata,fields)	
+	metadata['fields'] = self.fields(metadata)
         OpenObject::BackendResponse.new(success: true, content: metadata)
       end
-
     end
 
 
