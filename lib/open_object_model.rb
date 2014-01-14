@@ -154,17 +154,16 @@ module OpenObjectModel
     # @param [Hash] metadata
     # @return [Hash] fields list
     def fields(metadata)
+	computed_fields = Hash.new
 	if metadata.has_key?("fields")
 	  fields = metadata.clone.fetch('fields')
 	  fields_to_keep = class_variable_get(:@@available_fields)
 	  computed_fields = fields.select { |k,v|  fields_to_keep.include?(k) }
 	  computed_fields.each do |field,value|
 	    if value.has_key?('type')
-	      value.keep_if {|k,v| k=="type"}
+	      value.keep_if {|k,v| k=="type" ||  k=="selectable"}
 	    end
 	  end
-	else
-	  computed_fields = Hash.new
 	end
 	return computed_fields
     end
