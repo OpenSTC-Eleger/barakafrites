@@ -160,9 +160,7 @@ module OpenObjectModel
 	  fields_to_keep = class_variable_get(:@@available_fields)
 	  computed_fields = fields.select { |k,v|  fields_to_keep.include?(k) }
 	  computed_fields.each do |field,value|
-	    if value.has_key?('type')
-	      value.keep_if {|k,v| k=="type" ||  k=="selectable"}
-	    end
+	    value.keep_if {|k,v| k=="type" ||  k=="selectable" ||  k=="select"}
 	  end
 	end
 	return computed_fields
