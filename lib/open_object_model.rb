@@ -159,9 +159,9 @@ module OpenObjectModel
 	  fields = metadata.clone.fetch('fields')
 	  fields_to_keep = class_variable_get(:@@available_fields)
 	  computed_fields = fields.select { |k,v|  fields_to_keep.include?(k) }
-	  computed_fields.each do |field,value|
-	    value.keep_if {|k,v| k=="type" ||  k=="selectable" ||  k=="select"}
-	  end
+	  #computed_fields.each do |field,value|
+	  #  value.keep_if {|k,v| k=="type" ||  k=="selectable" ||  k=="select"}
+	  #end
 	end
 	return computed_fields
     end
