@@ -1,5 +1,6 @@
 module OpenObjectModel
 
+
   def self.included(base)
     base.extend ClassMethods
     base.class_eval do
@@ -159,10 +160,17 @@ module OpenObjectModel
 	  fields = metadata.clone.fetch('fields')
 	  fields_to_keep = class_variable_get(:@@available_fields)
 	  computed_fields = fields.select { |k,v|  fields_to_keep.include?(k) }
+	  related_fields = class_variable_get(:@@related_fields)
+	  computed_fields.each do |field, value|
+	     if related_fields[field] != nil
+	        value["url"] = "/api/#{related_fields[field].underscore.pluralize}" #related_fields[field].to_s.pluralize
+	     end      
+	  end
 	  #computed_fields.each do |field,value|
 	  #  value.keep_if {|k,v| k=="type" ||  k=="selectable" ||  k=="select"}
 	  #end
 	end
+	Rails.logger.debug("Computed fields from metadata #{computed_fields}")
 	return computed_fields
     end
     
