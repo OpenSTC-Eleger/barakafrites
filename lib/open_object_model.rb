@@ -1,7 +1,8 @@
 module OpenObjectModel
 
+@@related_fields = {}
 
-  def self.included(base)
+def self.included(base)
     base.extend ClassMethods
     base.class_eval do
       include ActiveModel::Model
