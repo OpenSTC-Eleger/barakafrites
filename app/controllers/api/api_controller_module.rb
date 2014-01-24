@@ -39,7 +39,10 @@ module Api::ApiControllerModule
 
     if request.head?
       @count = self.class.resource_model.count(user_context, format_filters(@filters)).content
-      head :ok, "Content-Range" => "#{self.class.resource_model.name} #{0}-#{0}/#{@count}"
+      @metadata = self.class.resource_model.get_metadata(user_context).content
+      #@count = @metadata["count"]
+      @fields = @metadata["fields"]
+      head :ok, { "Content-Range" => "#{self.class.resource_model.name} #{0}-#{0}/#{@count}", "Model-Fields" => "#{@fields.to_json}"}
     else
 
       pagination_and_sorting = Array.new

@@ -1,6 +1,8 @@
 module OpenObjectModel
 
-  def self.included(base)
+@@related_fields = {}
+
+def self.included(base)
     base.extend ClassMethods
     base.class_eval do
       include ActiveModel::Model
@@ -147,6 +149,44 @@ module OpenObjectModel
       Rails.logger.debug("Read with fields #{valid_fields}")
       read_without_fields(user_context, ids, valid_fields)
     end
+
+
+    # Keeps only fields and their types 
+    #  
+    # @param [Hash] metadata
+    # @return [Hash] fields list
+    def fields(metadata)
+	computed_fields = Hash.new
+	if metadata.has_key?("fields")
+	  fields = metadata.clone.fetch('fields')
+	  fields_to_keep = class_variable_get(:@@available_fields)
+	  computed_fields = fields.select { |k,v|  fields_to_keep.include?(k) }
+	  related_fields = class_variable_get(:@@related_fields)
+	  computed_fields.each do |field, value|
+	     if related_fields[field] != nil
+	        value["url"] = "/api/#{related_fields[field].underscore.pluralize}" #related_fields[field].to_s.pluralize
+	     end      
+	  end
+	  #computed_fields.each do |field,value|
+	  #  value.keep_if {|k,v| k=="type" ||  k=="selectable" ||  k=="select"}
+	  #end
+	end
+	Rails.logger.debug("Computed fields from metadata #{computed_fields}")
+	return computed_fields
+    end
+    
+    # Called in main controller to build HTTP head response with metadata 
+    #  
+    # @param [Hash] user_context
+    # @return [Hash] metadata : model fields list and count rows in collection
+    def get_metadata(user_context)
+      OpenObject.rescue_xmlrpc_fault do
+        metadata = self.connection(user_context).execute(open_object_model, 'getModelMetadata')
+	metadata['fields'] = self.fields(metadata)
+        OpenObject::BackendResponse.new(success: true, content: metadata)
+      end
+    end
+
 
 
   end
