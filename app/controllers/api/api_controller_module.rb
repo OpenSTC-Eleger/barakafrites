@@ -42,7 +42,7 @@ module Api::ApiControllerModule
       @metadata = self.class.resource_model.get_metadata(user_context).content
       #@count = @metadata["count"]
       @fields = @metadata["fields"]
-      head :ok, { "Content-Range" => "#{self.class.resource_model.name} #{0}-#{0}/#{@count}", "Model-Fields" => "#{@fields.to_json}"}
+      head :ok, { "Content-Range" => "#{self.class.resource_model.name} #{0}-#{0}/#{@count}", "Model-Fields" => "#{@fields.to_json}", "Model-Id" => "#{@metadata['model_id']}" }
     else
 
       pagination_and_sorting = Array.new
