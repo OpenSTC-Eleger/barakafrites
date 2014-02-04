@@ -53,6 +53,7 @@ Barakafrites::Application.routes.draw do
 	  get 'filters'
 	end
       end
+      resources :filters
     end
 
     namespace :openresa do
