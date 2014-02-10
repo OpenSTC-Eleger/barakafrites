@@ -163,6 +163,7 @@ def self.included(base)
 	  computed_fields = fields.select { |k,v|  fields_to_keep.include?(k) }
 	  related_fields = class_variable_get(:@@related_fields)
 	  computed_fields.each do |field, value|
+	     value.keep_if {|k,v| k=="type" ||  k=="selectable" ||  k=="select"}
 	     if related_fields[field] != nil
 	        value["url"] = "/api/#{related_fields[field].underscore.pluralize}" #related_fields[field].to_s.pluralize
 	     end      
