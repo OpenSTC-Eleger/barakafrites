@@ -8,4 +8,6 @@ class Openstc::Site
     attr_accessor field
   end
 
+  @@related_fields = {"service_ids" => "Openstc::Department", "site_parent_id" => "Openstc::Site" }
+
 end

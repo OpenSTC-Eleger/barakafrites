@@ -1,6 +1,5 @@
 module OpenObjectModel
 
-@@related_fields = {}
 
 def self.included(base)
     base.extend ClassMethods
@@ -161,7 +160,12 @@ def self.included(base)
 	  fields = metadata.clone.fetch('fields')
 	  fields_to_keep = class_variable_get(:@@available_fields)
 	  computed_fields = fields.select { |k,v|  fields_to_keep.include?(k) }
-	  related_fields = class_variable_get(:@@related_fields)
+	  related_fields = {}
+	  begin
+	  	related_fields = class_variable_get(:@@related_fields)
+	  rescue
+		#raise("Class has no realated fields")
+	  end
 	  computed_fields.each do |field, value|
 	     value.keep_if {|k,v| k=="type" ||  k=="selectable" ||  k=="select" || k=='selection'}
 	     if related_fields[field] != nil

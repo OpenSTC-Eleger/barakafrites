@@ -7,4 +7,6 @@ class Openstc::Intervention
     attr_accessor field
   end
 
+  @@related_fields = {"service_id" => "Openstc::Department", "site1" => "Openstc::Site", "equipment_id" => "Openstc::Equipment"}
+
 end
