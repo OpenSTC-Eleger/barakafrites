@@ -17,6 +17,7 @@
 # Ignore IDE settings
 .idea
 *.iml
+*.swp
 
 # Generated documentation
 doc
