@@ -189,8 +189,10 @@ def self.included(base)
 		#raise("Class has no realated fields")
 	  end
 	  computed_fields.each do |field, value|
-	     value.keep_if {|k,v| k=="type" ||  k=="selectable" ||  k=="select" || k=='selection'}
-	     if related_fields[field] != nil
+	     related_field = related_fields[field]	
+	     #keep only type, selectable,select and selection attributes on field if relation in related_field not equal blank
+	     value.keep_if {|k,v| k=="type" ||  k=="selectable" ||  k=="select" || (k=='selection' && related_field!="")}
+	     if related_field != nil &&  related_field!= ""
 	        value["url"] = "/api/#{related_fields[field].underscore.pluralize}" #related_fields[field].to_s.pluralize
 	     end      
 	  end
