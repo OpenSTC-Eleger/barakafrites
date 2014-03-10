@@ -189,7 +189,7 @@ def self.included(base)
 		#raise("Class has no realated fields")
 	  end
 	  computed_fields.each do |field, value|
-	     value.keep_if {|k,v| k=="type" ||  k=="selectable" ||  k=="select" || k=='selection'}
+	     value.keep_if {|k,v| k=="type" ||  k=="selectable" ||  k=="select" || k=='selection' || k=='help'}
 	     if related_fields[field] != nil
 	        value["url"] = "/api/#{related_fields[field].underscore.pluralize}" #related_fields[field].to_s.pluralize
 	     end      

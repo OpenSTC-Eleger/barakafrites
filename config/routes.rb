@@ -76,6 +76,11 @@ Barakafrites::Application.routes.draw do
       end
     end
 
+    namespace :openpatrimoine do
+      resources :contracts
+      resources :contract_types
+    end
+
   end
 
 
