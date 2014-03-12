@@ -25,7 +25,7 @@ class OpenObject::PartnerType
 
   set_open_object_model 'openstc.partner.type'
 
-  @@available_fields = %w(claimers code id name actions)
+  @@available_fields = %w(claimers code id name actions sending_mail)
   attr_accessor *@@available_fields
 
 end
