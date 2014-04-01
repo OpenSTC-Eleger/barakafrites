@@ -35,7 +35,8 @@ Barakafrites::Application.routes.draw do
         end
       end
       resources :task_schedules
-
+      resources :task_recurrences
+      
     end
 
     namespace :open_object do
