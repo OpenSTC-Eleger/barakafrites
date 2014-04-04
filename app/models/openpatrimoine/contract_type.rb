@@ -24,7 +24,8 @@ class Openpatrimoine::ContractType
   include OpenObjectModel
   set_open_object_model 'openstc.patrimoine.contract.type'
 
-  @@available_fields = %w( id name href)
+  @@available_fields = %w( id name href code parent_id actions)
   attr_accessor *@@available_fields
   
+  @@related_fields = {"parent_id" => "Openpatrimoine::ContractTypes"}
 end
