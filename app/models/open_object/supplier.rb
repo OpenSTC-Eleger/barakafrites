@@ -20,16 +20,12 @@
 ##
 
 
-module ApplicationHelper
-  def self.compute_pagination_sorting(params)
-    pagination_and_sorting = Array.new
+class OpenObject::Supplier
+  include OpenObjectModel
 
-    sorting = params[:sort]
-    pagination = params.select { |k, v| %w(offset limit).include?(k) && !v.nil? }.inject({}) { |h, (k, v)| h[k.to_sym] = v.to_i; h }
-    pagination_and_sorting << pagination unless pagination.empty?
-    pagination_and_sorting << {order: sorting} unless sorting.nil?
-    pagination_and_sorting = [pagination_and_sorting.inject({}) { |h, el| h.merge!(el); h }] unless pagination_and_sorting.empty?
-    return pagination_and_sorting
-  end
-  
+  set_open_object_model 'res.partner'
+
+  @@available_fields = %w(address category_id contract_ids id email name phone title type_id property_product_pricelist)
+  attr_accessor *@@available_fields
+
 end

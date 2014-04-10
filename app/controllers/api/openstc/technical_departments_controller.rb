@@ -20,16 +20,14 @@
 ##
 
 
-module ApplicationHelper
-  def self.compute_pagination_sorting(params)
-    pagination_and_sorting = Array.new
-
-    sorting = params[:sort]
-    pagination = params.select { |k, v| %w(offset limit).include?(k) && !v.nil? }.inject({}) { |h, (k, v)| h[k.to_sym] = v.to_i; h }
-    pagination_and_sorting << pagination unless pagination.empty?
-    pagination_and_sorting << {order: sorting} unless sorting.nil?
-    pagination_and_sorting = [pagination_and_sorting.inject({}) { |h, el| h.merge!(el); h }] unless pagination_and_sorting.empty?
-    return pagination_and_sorting
-  end
+class Api::Openstc::TechnicalDepartmentsController < Api::Openstc::DepartmentsController
+  include Api::ApiControllerModule
+  self.resource_model=(::Openstc::Department)
   
+  def index
+    params[:filters] = params[:filters] || {}
+    params[:filters]['is_technical'] = {field: 'technical', operator: '=', value: true}
+  super
+  end
+    
 end

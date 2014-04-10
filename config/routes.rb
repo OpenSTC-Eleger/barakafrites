@@ -9,7 +9,18 @@ Barakafrites::Application.routes.draw do
       resources :intervention_requests
       resources :sites
       resources :teams
-      resources :departments
+      resources :departments do
+        member do
+          get 'users'
+          get 'teams'
+        end
+      end
+      resources :technical_departments do
+        member do
+          get 'users'
+          get 'teams'
+        end
+      end
       resources :equipments
       resources :equipment_categories
       resources :absence_categories
@@ -44,7 +55,7 @@ Barakafrites::Application.routes.draw do
           get 'get_bookables_pricing'
         end
       end
-
+      resources :suppliers
       resources :partner_types
       resources :partner_addresses
       resources :portable_documents
@@ -74,6 +85,12 @@ Barakafrites::Application.routes.draw do
       resources :partners , controller: 'open_object/partners' do
         resources :bookables, only: [:index]
       end
+    end
+
+    namespace :openpatrimoine do
+      resources :contracts
+      resources :contract_types
+      resources :contract_lines
     end
 
   end

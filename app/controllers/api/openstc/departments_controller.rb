@@ -23,5 +23,25 @@
 class Api::Openstc::DepartmentsController < Api::ResourceController
   include Api::ApiControllerModule
   self.resource_model=(::Openstc::Department)
-
+  
+  api :GET, '/openstc/departments/:id/users', 'Fetch agents on the department '
+  def users
+    @department_id = params[:id]
+    @base_filter = ['service_ids.id','=',@department_id]
+    @filters = format_filters(params[:filters]) || []
+    @filters.push(@base_filter)
+    pagination_and_sorting = ApplicationHelper.compute_pagination_sorting(params)
+    backend_response_to_json OpenObject::User.find_all(user_context, @filters, params[:fields], *pagination_and_sorting)
+  end
+  
+  api :GET, '/openstc/departments/:department_id/teams', 'Fetch teams on the department '
+    def teams
+      @department_id = params[:id]
+      @base_filter = ['service_ids.id','=',@department_id]
+      @filters = format_filters(params[:filters]) || []
+      @filters.push(@base_filter)
+      pagination_and_sorting = ApplicationHelper.compute_pagination_sorting(params)
+      backend_response_to_json Openstc::Team.find_all(user_context, @filters, params[:fields], *pagination_and_sorting)
+    end
+    
 end
