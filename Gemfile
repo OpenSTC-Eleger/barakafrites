@@ -7,7 +7,7 @@ gem 'rails', '~>4.0.0'
 gem 'rabl'
 
 # To disable rails sessions
-gem 'session_off', :path => "vendor/gems"
+gem 'session_off', '0.5.0', :path => "vendor/gems/session_off-0.5.0"
 
 # Wonderfull hashes
 gem 'hashie'

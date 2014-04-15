@@ -1,8 +1,7 @@
 PATH
-  remote: vendor/gems
+  remote: vendor/gems/session_off-0.5.0
   specs:
-    session_off (0.5)
-      actionpack (>= 2.3)
+    session_off (0.5.0)
 
 GEM
   remote: https://rubygems.org/
@@ -148,5 +147,5 @@ DEPENDENCIES
   rabl
   rails (~> 4.0.0)
   rspec-rails (~> 2.14)
-  session_off!
+  session_off (= 0.5.0)!
   sqlite3
