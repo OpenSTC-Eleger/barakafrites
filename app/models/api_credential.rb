@@ -32,7 +32,7 @@ class ApiCredential < ActiveRecord::Base
   # Destroy all credentials older than Time.now + BarakafritesConfig.get[:credential_expiration_hours]
   # @return [Fixnum] the expired session count
   def self.process_expiration
-    records = self.where("created_at <= :datetime", {:datetime => (Time.now - BarakafritesConfig.get[:credential_expiration_hours].hours) })
+    records = self.where("created_at <= :datetime and expire = :exp", {:datetime => (Time.now - BarakafritesConfig.get[:credential_expiration_hours].hours), :exp => true })
     count = records.count
     logger.info("Processing session expiration, deleting #{count} records")
     records.destroy_all
