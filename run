@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+RUNENV=${1:-production}
+
+sed -i "s/localhost/${ERP_PORT_8069_TCP_ADDR}/" /srv/barakafrites/config/config.yml
+sed -i "s/RUNENV/${RUNENV}/" /etc/supervisor/conf.d/supervisord.conf
+
+/usr/bin/supervisord
+/usr/bin/supervisorctl
+while ( true ); do
+        echo '##################################'
+        echo 'To get back to Supervisor CLI:'
+        echo '  -> supervisorctl'
+        echo
+        echo 'To detach from Docker Console:'
+        echo '  -> Ctrl-p + Ctrl-q.'
+        echo
+        echo 'Dropping to shell'
+        echo '##################################'
+        echo
+        sleep 1
+        su - barakafrites -c 'rvm gemset use barakafrites && /bin/bash'
+done
