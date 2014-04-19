@@ -13,7 +13,7 @@ test:
     port: '8069'
     common: '/xmlrpc/common'
     object: '/xmlrpc/object'
-  root_menu: 'OpenSTM'
+  root_menu: 'OpenSTC'
   credential_expiration_hours: 12
 
 production:
@@ -22,5 +22,5 @@ production:
     port: '8069'
     common: '/xmlrpc/common'
     object: '/xmlrpc/object'
-  root_menu: 'OpenSTM'
+  root_menu: 'OpenSTC'
   credential_expiration_hours: 12
