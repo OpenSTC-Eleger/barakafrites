@@ -47,13 +47,11 @@ RUN /bin/bash -l -c "rvm gemset use barakafrites && bundle install"
 
 RUN /bin/bash -l -c "rvm gemset use barakafrites && gem list"
 
-# Remove Unused building packages to slim image
-RUN apt-get autoremove -y --purge git curl build-essential
-
 # Add application sources in container (order kind of matters !)
 # First those that don't change much
 ADD config.ru /srv/barakafrites/config.ru
-ADD script /srv/barakafrites/script
+RUN mkdir -p /srv/barakafrites/script
+ADD script/rails /srv/barakafrites/script/rails
 ADD Rakefile /srv/barakafrites/Rakefile
 ADD bin /srv/barakafrites/bin
 ADD public /srv/barakafrites/public
