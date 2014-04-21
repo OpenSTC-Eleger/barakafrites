@@ -52,6 +52,8 @@ RUN /bin/bash -l -c "rvm gemset use barakafrites && gem list"
 ADD config.ru /srv/barakafrites/config.ru
 RUN mkdir -p /srv/barakafrites/script
 ADD script/rails /srv/barakafrites/script/rails
+ADD script/start.sh /srv/barakafrites/script/start.sh
+RUN chmod +x /srv/barakafrites/script/start.sh
 ADD Rakefile /srv/barakafrites/Rakefile
 ADD bin /srv/barakafrites/bin
 ADD public /srv/barakafrites/public
