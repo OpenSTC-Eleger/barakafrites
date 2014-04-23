@@ -24,7 +24,7 @@ class OpenObject::User
   include OpenObjectModel
   set_open_object_model 'res.users'
 
-  @@available_fields = %w(complete_name contact_id context_lang context_tz date firstname groups_id id isDST isManager lastname login name phone service_id service_ids tasks team_ids user_email actions current_group openresa_group service_names isResaManager)
+  @@available_fields = %w(complete_name contact_id context_lang context_tz date firstname groups_id id isDST isManager lastname login name phone service_id service_ids tasks team_ids user_email actions current_group openresa_group service_names isResaManager cost)
 
   @@related_fields = {"context_tz" => ""}
 
