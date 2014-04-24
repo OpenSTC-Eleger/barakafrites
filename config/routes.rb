@@ -77,6 +77,8 @@ Barakafrites::Application.routes.draw do
 	end
       end
       resources :filters
+      resources :consumables
+      resources :consumable_categories
     end
 
     namespace :openresa do
