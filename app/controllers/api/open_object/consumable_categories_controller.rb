@@ -23,7 +23,7 @@
 class Api::OpenObject::ConsumableCategoriesController < Api::ResourceController
   include Api::ApiControllerModule
 
-  self.resource_model = (::OpenObject::ConsumableCategories )
+  self.resource_model = (::OpenObject::ConsumableCategory)
 
 end
 

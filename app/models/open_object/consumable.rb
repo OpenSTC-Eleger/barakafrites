@@ -24,7 +24,7 @@ class OpenObject::Consumable
   include OpenObjectModel
 
   set_open_object_model  'openbase.consumable'
-  @@available_fields = %w( id name href complete_name code type product_id)
+  @@available_fields = %w( id name href complete_name code type_id type_name)
   attr_accessor *@@available_fields
 
 end

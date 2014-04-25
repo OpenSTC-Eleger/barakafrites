@@ -20,11 +20,11 @@
 ##
 
 
-class OpenObject::ConsumableCategories
+class OpenObject::ConsumableCategory
   include OpenObjectModel
 
   set_open_object_model  'openbase.consumable.type'
-  @@available_fields = %w( id name href code price consumable_parent_id service_ids service_names )
+  @@available_fields = %w( id name href code price consumable_parent_id consumable_parent_name service_ids service_names )
   attr_accessor *@@available_fields
 
 end
