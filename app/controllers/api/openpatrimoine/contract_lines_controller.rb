@@ -21,7 +21,7 @@
 
 
 class Api::Openpatrimoine::ContractLinesController < Api::ResourceController
-  include Api::ApiControllerModule
+  include Api::ApiControllerModule, Api::ApiRecurrenceControllerModule
   self.resource_model=(::Openpatrimoine::ContractLine)
 
 end
