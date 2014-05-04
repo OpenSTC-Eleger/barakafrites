@@ -2,8 +2,9 @@
 set -e
 
 RUNENV=${1:-production}
+ERP_HOST=${ERP_HOST:-'172.17.42.1'}
 
-sed -i "s/localhost/${ERP_PORT_8069_TCP_ADDR}/" /srv/barakafrites/config/config.yml
+sed -i "s/localhost/${ERP_HOST}/" /srv/barakafrites/config/config.yml
 sed -i "s/RUNENV/${RUNENV}/" /etc/supervisor/conf.d/supervisord.conf
 
 /usr/bin/supervisord
