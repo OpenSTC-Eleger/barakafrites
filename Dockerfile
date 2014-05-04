@@ -1,6 +1,6 @@
 # DOCKER-VERSION 0.9.0
 
-FROM ubuntu:precise
+FROM ubuntu:12.04
 MAINTAINER Siclic "devs@siclic.fr"
 
 # Set some ENV variables
@@ -8,6 +8,7 @@ ENV TERM linux
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
+RUN echo "deb http://archive.ubuntu.com/ubuntu precise-updates main universe" >> /etc/apt/sources.list
 RUN apt-get update
 
 # Install git and curl
