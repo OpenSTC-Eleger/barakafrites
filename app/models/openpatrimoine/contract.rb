@@ -20,16 +20,13 @@
 ##
 
 
-class Openstc::Site
+class Openpatrimoine::Contract
   include OpenObjectModel
-  set_open_object_model 'openstc.site'
+  set_open_object_model 'openstc.patrimoine.contract'
 
-  @@available_fields = %w(complete_name id href length name service_names service_ids site_parent_id surface type width actions internal_booking external_booking service_bookable_ids service_bookable_names partner_type_bookable_ids partner_type_bookable_names color product_id block_booking)
-
-  @@available_fields.each do |field|
-    attr_accessor field
-  end
-
-  @@related_fields = {"service_ids" => "Openstc::Department", "site_parent_id" => "Openstc::Site" }
-
+  @@available_fields = %w( id name href actions date_start_order date_end_order internal_inter technical_service_id supplier_id provider_name patrimoine_is_equipment equipment_id site_id patrimoine_name state description deadline_delay type_renewal category_id contract_line contract_line_names)
+  attr_accessor *@@available_fields
+  
+  @@related_fields = {"category_id" => "Openpatrimoine::ContractType", "site_id" => "Openstc::Site", "equipment_id" => "Openstc::Equipment", "technical_service_id" => "Openstc::TechnicalDepartment",
+      "supplier_id" => "OpenObject::Supplier", "contract_line" => "Openpatrimoine::ContractLine"}
 end

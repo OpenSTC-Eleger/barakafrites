@@ -67,13 +67,7 @@ module Api::ApiControllerModule
       head :ok, { "Content-Range" => "#{self.class.resource_model.name} #{0}-#{0}/#{@count}", "Model-Fields" => "#{@fields.to_json}", "Model-Id" => "#{@metadata['model_id']}" }
     else
 
-      pagination_and_sorting = Array.new
-
-      sorting = params[:sort]
-      pagination = params.select { |k, v| %w(offset limit).include?(k) && !v.nil? }.inject({}) { |h, (k, v)| h[k.to_sym] = v.to_i; h }
-      pagination_and_sorting << pagination unless pagination.empty?
-      pagination_and_sorting << {order: sorting} unless sorting.nil?
-      pagination_and_sorting = [pagination_and_sorting.inject({}) { |h, el| h.merge!(el); h }] unless pagination_and_sorting.empty?
+      pagination_and_sorting = ApplicationHelper.compute_pagination_sorting(params)
       @collection = self.class.resource_model.find_all(user_context, format_filters(@filters), @fields, *pagination_and_sorting)
       backend_response_to_json @collection
     end
