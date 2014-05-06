@@ -21,10 +21,10 @@
 
 
 class Openpatrimoine::ContractLine
-  include OpenObjectModel
+  include OpenObjectModel, ApiModelRecurrenceModule
   set_open_object_model 'openstc.task.recurrence'
 
-  @@available_fields = %w( id name href is_team agent_id team_id internal_inter technical_service_id planned_hours task_categ_id supplier_cost recur_periodicity recur_week_monday recur_week_tuesday recur_week_wednesday recur_week_thursday recur_week_friday recur_week_saturday recur_week_sunday recur_month_type recur_month_absolute recur_month_relative_weight recur_month_relative_day recur_type date_start date_end recur_occurrence_nb occurrence_ids recurrence)
+  @@available_fields = %w( id name href is_team agent_id team_id internal_inter technical_service_id planned_hours task_categ_id supplier_cost recur_periodicity recur_week_monday recur_week_tuesday recur_week_wednesday recur_week_thursday recur_week_friday recur_week_saturday recur_week_sunday recur_month_type recur_month_absolute recur_month_relative_weight recur_month_relative_day recur_length recur_type date_start date_end recur_occurrence_nb occurrence_ids recurrence partner_id plan_task)
   attr_accessor *@@available_fields
   
   #@note: sry for the fault 'TaskCategorie', but Ruby is not enough smart to know that plurial of category is categories ^^

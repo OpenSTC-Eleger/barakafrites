@@ -34,8 +34,20 @@ Barakafrites::Application.routes.draw do
           get 'available_equipments'
         end
       end
+      resources :wizard_tasks do
+              member do
+                get 'available_vehicles'
+                get 'available_equipments'
+              end
+            end
       resources :task_schedules
-
+      resources :task_recurrences
+      resources :wizard_task_recurrences do
+        member do
+          get 'recurrence_dates'
+        end
+      end
+      
     end
 
     namespace :open_object do
@@ -75,7 +87,6 @@ Barakafrites::Application.routes.draw do
       end
       resources :booking_lines
       resources :booking_recurrences
-      get 'recurrence', to: 'booking_recurrences#get_dates'
       resources :bookables do
         member do
           get 'available_quantity'
@@ -90,7 +101,11 @@ Barakafrites::Application.routes.draw do
     namespace :openpatrimoine do
       resources :contracts
       resources :contract_types
-      resources :contract_lines
+      resources :contract_lines do
+        member do
+          get 'recurrence_dates'
+        end
+      end
     end
 
   end

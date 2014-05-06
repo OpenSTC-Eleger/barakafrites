@@ -20,13 +20,13 @@
 ##
 
 
-class Openpatrimoine::Contract
+class Openstc::TaskRecurrence
   include OpenObjectModel
-  set_open_object_model 'openstc.patrimoine.contract'
 
-  @@available_fields = %w( id name href actions date_start_order date_end_order internal_inter technical_service_id supplier_id provider_name patrimoine_is_equipment equipment_id site_id patrimoine_name state description deadline_delay type_renewal category_id contract_line contract_line_names delay_passed warning_delay state_order cancel_reason remaining_delay new_description new_date_start_order new_date_end_order)
+  set_open_object_model 'openstc.task.recurrence'
+
+  @@available_fields = %w( id name href is_team agent_id team_id internal_inter technical_service_id planned_hours task_categ_id supplier_cost recur_periodicity recur_week_monday recur_week_tuesday recur_week_wednesday recur_week_thursday recur_week_friday recur_week_saturday recur_week_sunday recur_month_type recur_month_absolute recur_month_relative_weight recur_month_relative_day recur_type date_start date_end recur_occurrence_nb occurrence_ids recurrence)
   attr_accessor *@@available_fields
-  
-  @@related_fields = {"category_id" => "Openpatrimoine::ContractType", "site_id" => "Openstc::Site", "equipment_id" => "Openstc::Equipment", "technical_service_id" => "Openstc::TechnicalDepartment",
-      "supplier_id" => "OpenObject::Supplier", "contract_line" => "Openpatrimoine::ContractLine"}
+
 end
+

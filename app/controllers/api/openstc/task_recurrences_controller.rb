@@ -20,12 +20,11 @@
 ##
 
 
-class Openpatrimoine::ContractType
-  include OpenObjectModel
-  set_open_object_model 'openstc.patrimoine.contract.type'
+class Api::Openstc::TaskRecurrencesController < Api::ResourceController
+  resource_description do
+    short 'Specific URIs to interact with/from tasks'
+  end
+  include Api::ApiControllerModule
+  self.resource_model=(::Openstc::TaskRecurrence)
 
-  @@available_fields = %w( id name href code parent_id actions)
-  attr_accessor *@@available_fields
-  
-  @@related_fields = {"parent_id" => "Openpatrimoine::ContractTypes"}
 end
