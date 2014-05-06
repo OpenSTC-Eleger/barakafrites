@@ -12,7 +12,7 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu precise-updates main universe" >>
 RUN apt-get update
 
 # Install git and curl
-RUN apt-get install -y git curl supervisor
+RUN apt-get install -y git curl
 
 # install RVM stuff
 RUN curl -sSL https://get.rvm.io | bash -s stable
@@ -25,7 +25,6 @@ RUN mkdir -p /srv/barakafrites/run
 RUN mkdir -p /srv/barakafrites/log
 # Add service user barakafrites
 RUN useradd --system --home /srv/barakafrites --shell /bin/bash --gid rvm barakafrites
-RUN chown -R barakafrites /srv/barakafrites
 
 # Set wordir for following RUN, ...
 WORKDIR /srv/barakafrites
@@ -46,8 +45,6 @@ ADD vendor /srv/barakafrites/vendor
 # Install barakafrites depedencies
 RUN /bin/bash -l -c "rvm gemset use barakafrites && bundle install"
 
-RUN /bin/bash -l -c "rvm gemset use barakafrites && gem list"
-
 # Add application sources in container (order kind of matters !)
 # First those that don't change much
 ADD config.ru /srv/barakafrites/config.ru
@@ -64,8 +61,7 @@ ADD app /srv/barakafrites/app
 ADD db /srv/barakafrites/db
 ADD config /srv/barakafrites/config
 
-# Put Supervisor config
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+RUN chown -R barakafrites /srv/barakafrites
 
 # Put our startup script
 ADD run /usr/local/bin/run
@@ -74,6 +70,7 @@ RUN chmod +x /usr/local/bin/run
 # The app listens on port 9292
 EXPOSE 9292
 
+USER barakafrites
 # Finally executes our startup script
 # Args passed to the 'docker run' command will be available to the script
-ENTRYPOINT /usr/local/bin/run
+CMD /usr/local/bin/run

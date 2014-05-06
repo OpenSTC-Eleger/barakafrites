@@ -5,21 +5,20 @@ RUNENV=${1:-production}
 ERP_HOST=${ERP_HOST:-'172.17.42.1'}
 
 sed -i "s/localhost/${ERP_HOST}/" /srv/barakafrites/config/config.yml
-sed -i "s/RUNENV/${RUNENV}/" /etc/supervisor/conf.d/supervisord.conf
 
-/usr/bin/supervisord
-/usr/bin/supervisorctl
+/bin/bash -l -c 'rvm gemset use barakafrites'
+/bin/bash -l -c "RAILS_ENV=$RUNENV rake db:create"
+/bin/bash -l -c "RAILS_ENV=$RUNENV rake db:migrate"
+/bin/bash -l -c "bundle exec puma -e $RUNENV -b tcp://0.0.0.0:9292 -p /srv/barakafrites/run/puma.pid -d"
+
 while ( true ); do
         echo '##################################'
-        echo 'To get back to Supervisor CLI:'
-        echo '  -> supervisorctl'
-        echo
         echo 'To detach from Docker Console:'
         echo '  -> Ctrl-p + Ctrl-q.'
         echo
-        echo 'Dropping to shell'
+        echo 'Dropping to rails console'
         echo '##################################'
         echo
         sleep 1
-        su - barakafrites -c 'rvm gemset use barakafrites && /bin/bash'
+        /bin/bash -l -c "HOME=/srv/barakafrites RAILS_ENV=$RUNENV bundle exec ./script/rails c"
 done

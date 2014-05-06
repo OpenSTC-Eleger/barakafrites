@@ -24,7 +24,7 @@ group :development, :test do
   gem 'pry'
 end
 
-gem 'airbrake'
+#gem 'airbrake'
 gem 'apipie-rails'
 gem 'protected_attributes'
 gem 'puma'
