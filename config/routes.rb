@@ -111,6 +111,9 @@ Barakafrites::Application.routes.draw do
       end
     end
 
+	namespace :open_achats_stock do
+		resources :purchases
+	end
   end
 
 
