@@ -24,7 +24,7 @@ class OpenAchatsStock::Purchase
   include OpenObjectModel
   set_open_object_model 'purchase.order'
 
-  @@available_fields = %w( id name href)
+  @@available_fields = %w( id name href date_order description service_id partner_id amount_total state validation validation_order)
 
   attr_accessor *@@available_fields
 
