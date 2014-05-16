@@ -20,11 +20,11 @@
 ##
 
 
-class OpenAchatsStock::Budget
+class OpenAchatsStock::AnalyticAccount
   include OpenObjectModel
-  set_open_object_model 'crossovered.budget'
+  set_open_object_model 'account.analytic.account'
 
-  @@available_fields = %w( id name href service_id openstc_practical_amount planned_amount date_from date_to)
+  @@available_fields = %w( id name href)
 
   attr_accessor *@@available_fields
 

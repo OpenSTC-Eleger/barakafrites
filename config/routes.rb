@@ -115,6 +115,7 @@ Barakafrites::Application.routes.draw do
 		resources :purchases
 		resources :budgets
 		resources :budget_lines
+		resources :analytic_accounts
 	end
   end
 

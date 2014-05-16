@@ -20,12 +20,8 @@
 ##
 
 
-class OpenAchatsStock::Budget
-  include OpenObjectModel
-  set_open_object_model 'crossovered.budget'
-
-  @@available_fields = %w( id name href service_id openstc_practical_amount planned_amount date_from date_to)
-
-  attr_accessor *@@available_fields
+class Api::OpenAchatsStock::BudgetLinesController < Api::ResourceController
+  include Api::ApiControllerModule
+  self.resource_model=(::OpenAchatsStock::BudgetLine)
 
 end
