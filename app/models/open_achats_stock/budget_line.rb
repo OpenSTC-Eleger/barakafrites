@@ -27,7 +27,7 @@ class OpenAchatsStock::BudgetLine
   @@available_fields = %w( id name href openstc_practical_amount planned_amount openstc_erosion crossovered_budget_id analytic_account_id)
 
   attr_accessor *@@available_fields
-  @@related_fields = {"crossovered_budget_id" => "OpenAchatsStock::Budget", "analytic_account_id" => "OpenAchatsStock::AnalyticAccount"}
-  
-	
+  @@related_fields = {"service_id" => "Openstc::Department", "crossovered_budget_id" => "OpenAchatsStock::Budget", "analytic_account_id" => "OpenAchatsStock::AnalyticAccount"}
+
+
 end
