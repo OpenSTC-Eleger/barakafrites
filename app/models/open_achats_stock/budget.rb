@@ -27,5 +27,6 @@ class OpenAchatsStock::Budget
   @@available_fields = %w( id name href service_id openstc_practical_amount planned_amount date_from date_to)
 
   attr_accessor *@@available_fields
+  @@related_fields = {"service_id" => "Openstc::Department"}
 
 end
