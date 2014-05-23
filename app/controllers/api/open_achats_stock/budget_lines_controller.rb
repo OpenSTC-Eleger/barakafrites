@@ -20,8 +20,8 @@
 ##
 
 
-class Api::OpenAchatsStock::AnalyticAccountsController < Api::ResourceController
+class Api::OpenAchatsStock::BudgetLinesController < Api::ResourceController
   include Api::ApiControllerModule
-  self.resource_model=(::OpenAchatsStock::AnalyticAccount)
+  self.resource_model=(::OpenAchatsStock::BudgetLine)
 
 end
