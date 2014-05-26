@@ -20,12 +20,8 @@
 ##
 
 
-class OpenAchatsStock::AnalyticAccount
-  include OpenObjectModel
-  set_open_object_model 'account.analytic.account'
-
-  @@available_fields = %w( id name href partner_id)
-
-  attr_accessor *@@available_fields
+class Api::OpenAchatsStock::TaxesController < Api::ResourceController
+  include Api::ApiControllerModule
+  self.resource_model=(::OpenAchatsStock::Account)
 
 end

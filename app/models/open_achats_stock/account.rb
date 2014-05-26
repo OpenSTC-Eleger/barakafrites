@@ -20,11 +20,11 @@
 ##
 
 
-class OpenAchatsStock::AnalyticAccount
+class OpenAchatsStock::Account
   include OpenObjectModel
-  set_open_object_model 'account.analytic.account'
+  set_open_object_model 'account.account'
 
-  @@available_fields = %w( id name href partner_id)
+  @@available_fields = %w( id name href)
 
   attr_accessor *@@available_fields
 
