@@ -113,9 +113,11 @@ Barakafrites::Application.routes.draw do
 
 	namespace :open_achats_stock do
 		resources :purchases
+		resources :purchase_lines
 		resources :budgets
 		resources :budget_lines
 		resources :analytic_accounts
+		resources :taxes
 	end
   end
 
