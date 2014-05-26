@@ -24,9 +24,11 @@ class OpenAchatsStock::Budget
   include OpenObjectModel
   set_open_object_model 'crossovered.budget'
 
-  @@available_fields = %w( id name href service_id openstc_practical_amount planned_amount date_from date_to)
+  @@available_fields = %w( id name href service_id openstc_practical_amount planned_amount date_from date_to state actions new_name new_date_from new_date_to validate_note done_note cancel_note)
 
   attr_accessor *@@available_fields
   @@related_fields = {"service_id" => "Openstc::Department"}
 
 end
+
+
