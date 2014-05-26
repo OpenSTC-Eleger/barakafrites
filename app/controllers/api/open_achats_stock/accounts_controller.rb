@@ -20,7 +20,7 @@
 ##
 
 
-class Api::OpenAchatsStock::TaxesController < Api::ResourceController
+class Api::OpenAchatsStock::AccountsController < Api::ResourceController
   include Api::ApiControllerModule
   self.resource_model=(::OpenAchatsStock::Account)
 
