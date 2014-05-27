@@ -26,17 +26,15 @@ class Api::OpenAchatsStock::AnalyticAccountsController < Api::ResourceController
 
   def index
     params[:filters] = params[:filters] || {}
-    params[:filters]['is_not_project0'] = '|'
-    params[:filters]['is_not_project1'] = {field: 'code', operator: '!=', value: '3'}
-    params[:filters]['is_not_project2'] = {field: 'code', operator: '=', value: false}
+    params[:filters]['is_not_project0'] = {field: 'name', operator: 'not ilike', value: 'Projects'}
     
-    params[:filters]['is_not_project3'] = '|'
-    params[:filters]['is_not_project4'] = {field: 'type', operator: '!=', value: 'view'}
-    params[:filters]['is_not_project5'] = {field: 'type', operator: '=', value: false}
+    params[:filters]['is_not_project1'] = '|'
+    params[:filters]['is_not_project2'] = {field: 'type', operator: '!=', value: 'view'}
+    params[:filters]['is_not_project3'] = {field: 'type', operator: '=', value: false}
     
-    params[:filters]['is_not_project6'] = '|'
-    params[:filters]['is_not_project7'] = {field: 'parent_id.code', operator: '!=', value: '3'}
-    params[:filters]['is_not_project8'] = {field: 'parent_id', operator: '=', value: false}
+    params[:filters]['is_not_project4'] = '|'
+    params[:filters]['is_not_project5'] = {field: 'parent_id.name', operator: 'not ilike', value: 'Projects'}
+    params[:filters]['is_not_project6'] = {field: 'parent_id', operator: '=', value: false}
 
   	super
   end

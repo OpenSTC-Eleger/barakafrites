@@ -24,8 +24,8 @@ class OpenAchatsStock::AnalyticAccount
   include OpenObjectModel
   set_open_object_model 'account.analytic.account'
 
-  @@available_fields = %w( id name href parent_id)
-
+  @@available_fields = %w( id name href parent_id actions)
+  @@related_fields = {"parent_id" => "OpenAchatsStock::AnalyticAccount"}
   attr_accessor *@@available_fields
 
 end
