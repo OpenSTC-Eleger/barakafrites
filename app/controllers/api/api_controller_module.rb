@@ -37,7 +37,7 @@ module Api::ApiControllerModule
           when 1
             filter
 	  when 3
-            filter.map { |k, v| v if v }
+            filter.map { |k, v| v if not v.nil? }
           else
             next
         end

@@ -24,4 +24,19 @@ class Api::OpenAchatsStock::AnalyticAccountsController < Api::ResourceController
   include Api::ApiControllerModule
   self.resource_model=(::OpenAchatsStock::AnalyticAccount)
 
+  def index
+    params[:filters] = params[:filters] || {}
+    params[:filters]['is_not_project0'] = {field: 'name', operator: 'not ilike', value: 'Projects'}
+    
+    params[:filters]['is_not_project1'] = '|'
+    params[:filters]['is_not_project2'] = {field: 'type', operator: '!=', value: 'view'}
+    params[:filters]['is_not_project3'] = {field: 'type', operator: '=', value: false}
+    
+    params[:filters]['is_not_project4'] = '|'
+    params[:filters]['is_not_project5'] = {field: 'parent_id.name', operator: 'not ilike', value: 'Projects'}
+    params[:filters]['is_not_project6'] = {field: 'parent_id', operator: '=', value: false}
+
+  	super
+  end
+
 end
