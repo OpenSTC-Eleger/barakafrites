@@ -24,7 +24,7 @@ class OpenAchatsStock::BudgetLine
   include OpenObjectModel
   set_open_object_model 'crossovered.budget.lines'
 
-  @@available_fields = %w( id name href openstc_practical_amount planned_amount openstc_erosion crossovered_budget_id analytic_account_id complete_name)
+  @@available_fields = %w( id name href openstc_practical_amount planned_amount openstc_erosion crossovered_budget_id analytic_account_id complete_name openstc_general_account)
 
   attr_accessor *@@available_fields
   @@related_fields = {"service_id" => "Openstc::Department", "crossovered_budget_id" => "OpenAchatsStock::Budget", "analytic_account_id" => "OpenAchatsStock::AnalyticAccount"}
