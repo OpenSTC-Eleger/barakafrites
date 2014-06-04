@@ -119,6 +119,7 @@ Barakafrites::Application.routes.draw do
 		resources :analytic_accounts
 		resources :taxes
 		resources :accounts
+		resources :products
 	end
   end
 
