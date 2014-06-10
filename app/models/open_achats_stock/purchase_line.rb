@@ -24,9 +24,9 @@ class OpenAchatsStock::PurchaseLine
   include OpenObjectModel
   set_open_object_model 'purchase.order.line'
 
-  @@available_fields = %w( id name href product_id product_qty taxes_id price_unit)
+  @@available_fields = %w( id name href product_id product_qty taxes_id price_unit budget_line_id order_id)
 
-  @@related_fields = {"taxes_id" => "OpenAchatsStock::Taxe"}
+  @@related_fields = {"taxes_id" => "OpenAchatsStock::Taxe", "budget_line_id" => "OpenAchatsStock::BudgetLine"}
 
   attr_accessor *@@available_fields
 
