@@ -22,7 +22,12 @@
 
 class Api::OpenObject::ElectedMembersController < Api::ResourceController
   include Api::ApiControllerModule
-
   self.resource_model = (::OpenObject::User )
+
+  def index
+    params[:filters] = params[:filters] || {}
+    params[:filters]['status'] = {field: 'status', operator: '=', value: 'elected-member'}
+  super
+  end
 
 end
