@@ -24,7 +24,7 @@ class OpenAchatsStock::Purchase
   include OpenObjectModel
   set_open_object_model 'purchase.order'
 
-  @@available_fields = %w( id name href date_order description service_id partner_id amount_untaxed amount_tax amount_total state validation state_order actions check_dst check_elu user_id attach_invoices attach_not_invoices attach_waiting_invoice_ids engage_to_treat account_analytic_id order_line shipped_rate supplier_mail_sent)
+  @@available_fields = %w( id name href date_order description service_id partner_id amount_untaxed amount_tax amount_total state validation state_order actions check_dst check_elu user_id attach_invoices attach_not_invoices attach_waiting_invoice_ids engage_to_treat account_analytic_id order_line shipped_rate supplier_mail_sent validation_order_items validation_note)
 
   @@related_fields = {"service_id" => "Openstc::Department", "partner_id" => "OpenObject::Supplier", "account_analytic_id" => "OpenAchatsStock::BudgetLine"}
 
