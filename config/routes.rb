@@ -47,7 +47,7 @@ Barakafrites::Application.routes.draw do
           get 'recurrence_dates'
         end
       end
-      
+
     end
 
     namespace :open_object do
@@ -79,6 +79,7 @@ Barakafrites::Application.routes.draw do
       resources :filters
       resources :consumables
       resources :consumable_categories
+      resources :officers
       resources :elected_members
     end
 
@@ -166,7 +167,7 @@ Barakafrites::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'
