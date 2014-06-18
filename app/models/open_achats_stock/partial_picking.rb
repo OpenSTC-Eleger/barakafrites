@@ -30,4 +30,10 @@ class OpenAchatsStock::PartialPicking
 
   attr_accessor *@@available_fields
 
+	def partial_picking(user_context)
+		OpenObject.rescue_xmlrpc_fault do
+			response = OpenAchatsStock::PartialPicking.connection(user_context).execute(OpenAchatsStock::PartialPicking.open_object_model, 'partial_picking', self.id.to_i)
+			OpenObject::BackendResponse.new(success: true, content: response)
+		end
+	end
 end

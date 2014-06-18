@@ -30,4 +30,9 @@ class OpenAchatsStock::Purchase
 
   attr_accessor *@@available_fields
 
+  ## internally used by Barakafrites, from controller#index method
+  def create_partial_picking(user_context)
+    OpenAchatsStock::Purchase.connection(user_context).execute(OpenAchatsStock::Purchase.open_object_model, 'create_partial_picking', self.id.to_i)
+  end
+
 end
