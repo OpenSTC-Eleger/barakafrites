@@ -24,4 +24,25 @@ class Api::OpenAchatsStock::PartialPickingsController < Api::ResourceController
   include Api::ApiControllerModule
   self.resource_model=(::OpenAchatsStock::PartialPicking)
 
+  api :GET, '/open_achats_stock/partial_pickings/:id/perform', 'Perform a partial picking into the backend'
+  def perform
+    @picking = OpenAchatsStock::PartialPicking.new(id: params[:id])
+    backend_response_to_json  @picking.do_partial(user_context)
+  end
+
+  api :GET, '/open_achats_stock/purchases/:purchase_id/partial_pickings', 'create a partial picking into the backend and return it, if resource fetched from a purchase'
+  def index
+    purchase_id = params[:purchase_id] || false
+    if purchase_id && !request.head?
+      @purchase = OpenAchatsStock::Purchase.new(id: params[:id])
+      picking_id =  @purchase.create_partial_picking(user_context)
+      if picking_id
+        params[:filters] ||= {}
+        params[:filters] = {only_this_id: {field: 'id', operator: '=', value: picking_id}}
+      end
+    end
+
+    super
+  end
+
 end
