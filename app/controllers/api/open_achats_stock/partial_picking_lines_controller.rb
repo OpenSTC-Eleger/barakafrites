@@ -24,4 +24,14 @@ class Api::OpenAchatsStock::PartialPickingLinesController < Api::ResourceControl
   include Api::ApiControllerModule
   self.resource_model=(::OpenAchatsStock::PartialPickingLine)
 
+## if resource is fetched from its nested parent, add a filter for OpenERP
+def index
+	wizard_id = params[:partial_picking_id] || false
+	params[:filters] ||= {}
+	if wizard_id
+		params[:filters]['from_parent'] = {field: 'wizard_id.id', operator: '=', value:wizard_id}
+	end
+	super
+end
+
 end
