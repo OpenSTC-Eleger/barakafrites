@@ -114,7 +114,9 @@ Barakafrites::Application.routes.draw do
     end
 
 	namespace :open_achats_stock do
-		resources :purchases
+		resources :purchases do
+			resources :partial_pickings, only: [:index]
+		end
 		resources :purchase_lines
 		resources :budgets
 		resources :budget_lines
@@ -122,6 +124,13 @@ Barakafrites::Application.routes.draw do
 		resources :taxes
 		resources :accounts
 		resources :products
+		resources :partial_pickings do
+			resources :partial_picking_lines ,shallow: true
+			member do
+				post 'perform'
+			end
+		end
+		
 	end
   end
 
