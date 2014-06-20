@@ -125,11 +125,11 @@ Barakafrites::Application.routes.draw do
 		resources :accounts
 		resources :products
 		resources :partial_pickings do
-			resources :partial_picking_lines ,shallow: true
 			member do
 				post 'perform'
 			end
 		end
+		resources :partial_picking_lines
 		
 	end
   end

@@ -26,6 +26,8 @@ class OpenAchatsStock::PartialPickingLine
 
   @@available_fields = %w( id href product_id quantity)
 
+  @@related_fields = {"product_id" => "OpenAchatsStock::Product"}
+
   attr_accessor *@@available_fields
 
 end
