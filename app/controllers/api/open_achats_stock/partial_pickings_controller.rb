@@ -34,7 +34,7 @@ class Api::OpenAchatsStock::PartialPickingsController < Api::ResourceController
   def index
     purchase_id = params[:purchase_id] || false
     if purchase_id && !request.head?
-      @purchase = OpenAchatsStock::Purchase.new(id: params[:id])
+      @purchase = OpenAchatsStock::Purchase.new(id: params[:purchase_id])
       picking_id =  @purchase.create_partial_picking(user_context)
       if picking_id
         params[:filters] ||= {}
